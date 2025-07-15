@@ -6,7 +6,7 @@ const CategorySection = () => {
   return (
     <section className="main-max-width padding-x mx-auto">
       <h2 className="my-9 text-center text-xl font-bold text-gray-800">
-        Browse By Category
+        Buscar Categoría
       </h2>
 
       {/* Content */}
