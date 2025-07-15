@@ -1,55 +1,65 @@
 "use client";
+// Indica que este componente se ejecutará del lado del cliente (React + Next.js Client Component)
 
 import React, { useState } from "react";
-import Link from "next/link";
-import SearchForm from "./SearchForm";
-import NavItems from "./NavItems";
-import MobileNavbar from "./MobileNavbar";
-import SearchButton from "./SearchButton";
+import Link from "next/link"; // Componente de Next.js para navegación sin recargar la página
+import SearchForm from "./SearchForm"; // Componente del formulario de bisqueda
+import NavItems from "./NavItems"; // Menú de navegación (Para escritorio)
+import MobileNavbar from "./MobileNavbar"; // Menú de navegación para celulares 
+import SearchButton from "./SearchButton"; //Botón de busqueda para celulares
 
 const NavBar = () => {
-  const [showSearchForm, setShowSearchForm] = useState(false);
+    const [showSearchForm, setShowSearchForm] = useState(false);
+    // Estado para mostrar u ocultar el formulario de búsqueda en celulares
 
-  const handleSearch = () => {
-    setShowSearchForm((curr) => !curr);
-  };
+    const handleSearch = () => {
+        setShowSearchForm((curr) => !curr);
+        // Alterna el estado se showsearchForm al hacer clic en el botón de búsqueda
+    };
 
-  return (
-    <>
-      {/* <nav className="bg-[whitesmoke] sticky top-0 z-20 w-full py-4"> */}
-        <div className="flex justify-between items-center main-max-width mx-auto padding-x">
-          <Link href="/">
-            <h1 className="text-2xl font-extrabold text-gray-900">Shopline</h1>
-          </Link>
+    return (
+        <>
+            {/* Contenedor principal de la barra de navegación  */}
+            <div className="flex justify-between items-center main-max-width mx-auto padding-x">
+                {/* Link para volver al home */}
+                <Link href="/">
+                    <h1 className="text-2xl font-extrabold text-gray-900">Shopline</h1>
+                </Link>
 
-          <div className="max-lg:hidden">
-            <SearchForm />
-          </div>
+                {/* Visible solo en pantallas grandes (oculto en <= LG) */}
+                <div className="max-lg:hidden">
+                    <SearchForm />
+                </div>
 
-          <div className="max-lg:block hidden">
-            <SearchButton
-            //   handleSearch={handleSearch}
-            //   showSearchForm={showSearchForm}
-            />
-          </div>
+                {/* Visible solo en pantallas <= LG */}
+                <div className="max-lg:block hidden">
 
-          <div className="max-md:hidden">
-            <NavItems />
-          </div>
+                    <SearchButton
+                        //Funciona como un interruptor (mostrar/noMostrar) 
+                        handleSearch={handleSearch}
+                        showSearchForm={showSearchForm}
+                    />
+                </div>
 
-          <div className="max-md:block hidden">
-            <MobileNavbar />
-          </div>
-        </div>
-      {/* </nav> */}
+{               /* Visible en pantallas > MD */}
+                <div className="max-md:hidden">
+                    <NavItems />
+                </div>
 
-      {showSearchForm && (
-        <div className="w-[300px] mx-auto mt-4 max-lg:block hidden">
-          <SearchForm />
-        </div>
-      )}
-    </>
-  );
+                {/* Visible solo en pantallas <= MD */}
+                <div className="max-md:block hidden">
+                    <MobileNavbar />
+                </div>
+            </div>
+
+             {/* Si showSearchForm es true, se muestra el buscador en mobile */}
+            {showSearchForm && (
+                <div className="w-[300px] mx-auto mt-4 max-lg:block hidden">
+                    <SearchForm />
+                </div>
+            )}
+        </>
+    );
 };
 
 export default NavBar;

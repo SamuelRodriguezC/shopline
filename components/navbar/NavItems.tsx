@@ -1,11 +1,17 @@
 import React from "react";
 import Link from "next/link";
+// Importa Link para navegación interna con Next.js (no recarga la página)
 import { FaCartShopping } from "react-icons/fa6";
+// Importa el ícono de carrito de compras de react-icons (FontAwesome 6)
+
 import { cn } from "@/lib/utils";
+// Importa la función cn (helper para concatenar clases condicionales)
+
 
 
 interface Props{
     mobile?: boolean
+      // Prop opcional "mobile" que determina si el menú se adapta a dispositivos móviles
 }
 
 const NavItems = ({mobile}: Props) => {
@@ -29,7 +35,7 @@ const NavItems = ({mobile}: Props) => {
         <FaCartShopping className="text-4xl" />
 
         <span className="absolute top-0 right-0 px-2 py-1 bg-black rounded-full text-white">
-          3
+          
         </span>
       </div>
     </div>
