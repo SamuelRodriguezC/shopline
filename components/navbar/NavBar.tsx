@@ -20,7 +20,7 @@ const NavBar = () => {
     return (
         <>
             {/* Contenedor principal de la barra de navegación  */}
-            <div className="flex justify-between items-center main-max-width mx-auto padding-x">
+            <div className="flex justify-between items-center main-max-width mx-auto padding-x py-3">
                 {/* Link para volver al home */}
                 <Link href="/">
                     <h1 className="text-2xl font-extrabold text-gray-900">Shopline</h1>

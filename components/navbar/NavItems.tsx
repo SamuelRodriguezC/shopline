@@ -34,8 +34,8 @@ const NavItems = ({mobile}: Props) => {
       <div className="relative flex items-center h-[60px] w-[60px] justify-center cursor-pointer">
         <FaCartShopping className="text-4xl" />
 
-        <span className="absolute top-0 right-0 px-2 py-1 bg-black rounded-full text-white">
-          
+        <span className="absolute top-0 right-0 px-2 py-0.5 bg-black rounded-full text-white">
+          3
         </span>
       </div>
     </div>

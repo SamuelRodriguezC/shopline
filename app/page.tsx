@@ -1,8 +1,13 @@
+import CategorySection from '@/components/home/CategorySection'
+import Hero from '@/components/home/Hero'
 import React from 'react'
 
 const HomePage = () => {
   return (
-    <div>Hola Desde _Next.js</div>
+    <>
+      <Hero/>
+      <CategorySection/>
+    </>
   )
 }
 
