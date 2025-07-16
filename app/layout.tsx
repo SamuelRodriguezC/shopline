@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Ubuntu } from 'next/font/google'
 import NavBar from "@/components/navbar/NavBar";
+import NavBarContainer from "@/components/navbar/NavBarContainer";
+import Footer from "@/components/footer/Footer";
 
 
 
@@ -37,8 +39,9 @@ export default function RootLayout({
         className={``}
       >
         <main className="w-full ">
-          <NavBar/>
+          <NavBarContainer/>
           {children}
+          <Footer/>
         </main>
       </body>
     </html>

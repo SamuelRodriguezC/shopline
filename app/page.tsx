@@ -10,7 +10,6 @@ const HomePage = () => {
       <Hero/>
       <CategorySection/>
       <ProductSection title="Prodcutos Destacados"/>
-      <Footer/>
     </>
   )
 }

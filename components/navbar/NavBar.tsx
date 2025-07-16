@@ -8,7 +8,15 @@ import NavItems from "./NavItems"; // Menú de navegación (Para escritorio)
 import MobileNavbar from "./MobileNavbar"; // Menú de navegación para celulares 
 import SearchButton from "./SearchButton"; //Botón de busqueda para celulares
 
-const NavBar = () => {
+interface User{
+    loggedInUser: {
+        name: string;
+        email: string;
+        image: string;
+    }
+}
+
+const NavBar = ({ loggedInUser }: User) => {
     const [showSearchForm, setShowSearchForm] = useState(false);
     // Estado para mostrar u ocultar el formulario de búsqueda en celulares
 
@@ -43,7 +51,7 @@ const NavBar = () => {
 
 {               /* Visible en pantallas > MD */}
                 <div className="max-md:hidden">
-                    <NavItems />
+                    <NavItems loggedInUser={loggedInUser}/>
                 </div>
 
                 {/* Visible solo en pantallas <= MD */}
