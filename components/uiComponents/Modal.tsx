@@ -18,7 +18,7 @@ const Modal = ({ children }: Props) => {
     <Dialog>
       <DialogTrigger>
         <Button className="default-btn max-sm:text-[12px] max-sm:px-4 my-6">
-          Haga clic para añadir una reseña
+          Añadir Reseña
         </Button>
       </DialogTrigger>
       <DialogContent>
