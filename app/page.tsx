@@ -1,3 +1,4 @@
+import Footer from '@/components/footer/Footer'
 import CategorySection from '@/components/home/CategorySection'
 import Hero from '@/components/home/Hero'
 import ProductSection from '@/components/home/ProductSection'
@@ -9,6 +10,7 @@ const HomePage = () => {
       <Hero/>
       <CategorySection/>
       <ProductSection title="Prodcutos Destacados"/>
+      <Footer/>
     </>
   )
 }
