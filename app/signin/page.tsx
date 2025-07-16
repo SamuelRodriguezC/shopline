@@ -8,7 +8,7 @@ const SignupPage = () => {
     <div className="bg-gray-50 flex items-center justify-center min-h-screen px-4">
     <div className="bg-white shadow-xl rounded-2xl p-6 sm:p-10 max-w-sm w-full flex flex-col gap-6">
       <h2 className="text-3xl font-semibold text-center text-gray-900">
-        Welcome!
+        Bienvenido!
       </h2>
   
       <form action= {async () => {
@@ -23,7 +23,7 @@ const SignupPage = () => {
             height={30}
             className="mr-3"
           />
-          Continue with Google
+          Continuar con Google
         </button>
       </form>
     </div>
