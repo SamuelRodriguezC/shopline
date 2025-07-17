@@ -5,17 +5,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-// Importa los componentes del "Sheet" (deslizable lateral tipo modal)
-// Generalmente usados para menús laterales o paneles emergentes
-
 import { FaHamburger } from "react-icons/fa";
-// Importa el ícono de hamburguesa del paquete react-icons (FontAwesome)
-
 import NavItems from "./NavItems";
-// Importa el componente NavItems (probablemente la lista de enlaces de navegación)
 
+interface Props{
+  loggedInUser:{
+    name: string;
+    email: string;
+    image: string;
+  }
+}
 
-const MobileNavbar = () => {
+const MobileNavbar = ({loggedInUser}: Props) => {
   return (
     <Sheet>
       {/* Componente principal que envuelve el comportamiento del panel lateral */}
@@ -32,7 +33,7 @@ const MobileNavbar = () => {
           </SheetTitle>
         </SheetHeader>
 
-        <NavItems mobile />
+        <NavItems mobile loggedInUser={loggedInUser}/>
 
       </SheetContent>
     </Sheet>

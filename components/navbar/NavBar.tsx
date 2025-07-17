@@ -56,7 +56,7 @@ const NavBar = ({ loggedInUser }: User) => {
 
                 {/* Visible solo en pantallas <= MD */}
                 <div className="max-md:block hidden">
-                    <MobileNavbar />
+                    <MobileNavbar loggedInUser={loggedInUser} />
                 </div>
             </div>
 
