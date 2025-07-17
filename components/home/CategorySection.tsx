@@ -1,8 +1,14 @@
 import React from 'react'
 import CategoryCard from './CategoryCard'
+import { getCateogories } from '@/lib/api'
+import { Category } from '@/lib/type'
 
 
-const CategorySection = () => {
+const CategorySection = async () => {
+
+  // Obtener desde la api las categorías de la base de datos
+  const categories = await getCateogories()
+  // console.log(categories)
   return (
     <section className="main-max-width padding-x mx-auto">
       <h2 className="my-9 text-center text-xl font-bold text-gray-800">
@@ -11,11 +17,9 @@ const CategorySection = () => {
 
       {/* Content */}
       <div className="flex justify-center flex-wrap gap-8">
-        <CategoryCard/>
-        <CategoryCard/>
-        <CategoryCard/>
-        <CategoryCard/>
-        <CategoryCard/>
+        {/* Pasarle al componente el objeto de la categoría */}
+        {categories.map((category: Category) => <CategoryCard key={category.id} category={category}/> )}
+        
 
       </div>
     </section>

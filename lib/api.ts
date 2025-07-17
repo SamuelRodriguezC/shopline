@@ -1,5 +1,7 @@
 import axios from "axios";
 
+// URL base del backend para centralizar y facilitar las solicitudes HTTP desde el frontend.
+export const BASE_URL = "http://127.0.0.1:8000" 
 
 // Crear instancia de axios para usarla como cliente HTTP
 const api = axios.create({
@@ -54,5 +56,35 @@ export async function createNewUser(data:
         // De lo contrario lanzar un mensaje generico
         throw new Error("Un Error Desconocido ha Ocurrido") 
 
+    }
+}
+
+
+
+export async function getCateogories(){
+    try{
+        const response = await api.get("category_list")
+        return response.data
+    }
+    catch(err:unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
+    }
+}
+
+
+export async function getProducts(){
+    try{
+        const response = await api.get("product_list")
+        return response.data
+    
+    }
+    catch(err:unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
     }
 }
