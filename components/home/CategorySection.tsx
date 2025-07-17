@@ -1,13 +1,13 @@
 import React from 'react'
 import CategoryCard from './CategoryCard'
-import { getCateogories } from '@/lib/api'
+import { getCategories } from '@/lib/api'
 import { Category } from '@/lib/type'
 
 
 const CategorySection = async () => {
 
   // Obtener desde la api las categorías de la base de datos
-  const categories = await getCateogories()
+  const categories = await getCategories()
   // console.log(categories)
   return (
     <section className="main-max-width padding-x mx-auto">

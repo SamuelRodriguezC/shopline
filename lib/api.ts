@@ -61,9 +61,22 @@ export async function createNewUser(data:
 
 
 
-export async function getCateogories(){
+export async function getCategories(){
     try{
         const response = await api.get("category_list")
+        return response.data
+    }
+    catch(err:unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
+    }
+}
+
+export async function getCategory(slug: string){
+    try{
+        const response = await api.get(`categories/${slug}`)
         return response.data
     }
     catch(err:unknown){

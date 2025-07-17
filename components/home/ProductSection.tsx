@@ -10,7 +10,7 @@ interface Props{
 const ProductSection = async ({title}: Props) => {
 
   const products = await getProducts()
-  console.log(products)
+  // console.log(products)
 
   return (
     <section className="main-max-width x-10 max-sm:px-10 mx-auto my-12">
