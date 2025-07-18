@@ -101,3 +101,16 @@ export async function getProducts(){
         throw new Error("Un Error Desconocido ha Ocurrido")
     }
 }
+
+export async function getProductDetail(slug: string){
+    try{
+        const response = await api.get(`/products/${slug}`)
+        return response.data
+    }
+     catch(err:unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
+    }
+}
