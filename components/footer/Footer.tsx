@@ -2,11 +2,13 @@ import React from 'react'
 import { FaLinkedin, FaFacebookF, FaYoutube } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 
+
+// Footer de la tienda online: incluye descripción, enlaces rápidos, categorías, redes sociales y derechos reservados.
 const Footer = () => {
   return (
     <footer className="bg-black text-white w-full py-16">
       <div className="flex justify-between items-center main-max-width mx-auto padding-x flex-wrap gap-6 max-md:justify-center">
-        {/* Logo & Description */}
+        {/* Contenedor principal del footer */}
         <div className="flex flex-col gap-6 w-[500px]">
           <h1 className="text-3xl font-bold text-white">ShopLine</h1>
           <p className="text-[15px] text-gray-400 leading-[1.6]">
@@ -17,7 +19,7 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Quick Links */}
+        {/* Sección de logo y descripción */}
         <div className="flex flex-col gap-5">
           <h2 className="text-lg font-semibold">Links</h2>
           <ul className="text-gray-400 space-y-3">
@@ -35,7 +37,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Customer Support */}
+        {/* Enlaces rápidos */}
         <div className="flex flex-col gap-5">
           <h2 className="text-lg font-semibold">Categorías</h2>
           <ul className="text-gray-400 space-y-3">
@@ -51,7 +53,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Social Media */}
+      {/* Soporte al cliente */}
       <div className="flex justify-center items-center gap-6 mt-10">
         <FaLinkedin className="text-2xl text-gray-400 hover:text-white transition cursor-pointer" />
         <FaFacebookF className="text-2xl text-gray-400 hover:text-white transition cursor-pointer" />

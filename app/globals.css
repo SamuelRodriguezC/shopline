@@ -125,7 +125,7 @@
 
 
 
-
+/* Clases personalizadas utilizables desde cualquier parte de la aplicación mediante layout.tsx*/
 @layer utilities {
   .search-form {
     @apply w-[300px] max-sm:w-[250px] max-sm:h-[40px] max-sm:text-[14px] 
