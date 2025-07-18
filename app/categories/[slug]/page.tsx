@@ -4,6 +4,12 @@ import { getCategories, getCategory } from '@/lib/api'
 import { Category, Product } from '@/lib/type'
 import React from 'react'
 
+// Optimizar la página
+export async function generateStaticParams(){
+  const categories = await getCategories()
+  return categories.map((category: Category) => ({slug: category.slug}))
+}
+
 const CategoryPage = async ({params}: {params: Promise<{slug: string}>}) => {
 
   const { slug } = await params
