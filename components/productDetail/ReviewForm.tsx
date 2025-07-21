@@ -2,12 +2,12 @@
 // Indica que este componente se debe ejecutar en el cliente (usa hooks, eventos, etc.)
 
 import { Star } from "lucide-react";  // Icono de estrella
-import React, { useState } from "react";  // React y el hook useState
+import React, { useEffect, useState } from "react";  // React y el hook useState
 import Button from "../uiComponents/Button";  // Botón personalizado
 import { cn } from "@/lib/utils";  // Función para combinar clases CSS
 import { Textarea } from "../ui/textarea";  // Textarea personalizado (probablemente shadcn o tuyo)
-import { Product } from "@/lib/type";
-import { createReviewAction } from "@/lib/actions";
+import { Product, Review } from "@/lib/type";
+import { createReviewAction, updateReviewAction } from "@/lib/actions";
 import { toast } from 'react-toastify'
 
 
@@ -18,10 +18,13 @@ interface Props {
     review: string;
 }
 
-const ReviewForm = ({product, loggedInUserEmail}: {product: Product, loggedInUserEmail: string | null | undefined}) => {
+const ReviewForm = ({product, loggedInUserEmail, review, updateReviewForm}: {product: Product, loggedInUserEmail: string | null | undefined, review?: Review, updateReviewForm?: boolean}) => {
 
     // Extraer el id e slug del producto pasado desde la pagina
     const {id, slug} = product
+
+    // Extrar el rating y texto de la review
+    // const {rating, review: reviewMessage} = review
 
     // Obtener los campos del formulario (review e usuario que realizó la acción)
     const[customerReview, setCustomerReview] = useState("") 
@@ -63,6 +66,50 @@ const ReviewForm = ({product, loggedInUserEmail}: {product: Product, loggedInUse
         { rating: 4, review: "Muy Bueno" },
         { rating: 5, review: "Excelente" },
     ];
+
+    // 
+    useEffect(() => {
+        if (updateReviewForm && review){
+            const {rating, review: reviewMessage} = review 
+            setClickedRating(rating)
+            setCustomerReview(reviewMessage)
+
+            const ratingTag = ratings.find((r) => r.rating === rating)
+            setClickedReview(ratingTag ? ratingTag.review : "")
+        }
+
+
+    }, [updateReviewForm ]);
+
+    async function handleUpdateReview(e: React.FormEvent){
+        e.preventDefault()
+        const formData = new FormData()
+        setReviewBtnLoader(true)
+        formData.set("slug", slug)
+        formData.set("review", customerReview)
+        formData.set("rating", String(clickedRating))
+        formData.set("review_id", review? String(review.id) : "")
+
+        try{
+            await updateReviewAction(formData)
+            toast.success("Reseña Actualizada Correctamente")
+        }
+         // Mostrar mensaje de error en caso de una falla
+        catch(err:unknown){
+            if(err instanceof Error){
+                toast.error("Un error ha ocurrido, intentalo más tarde.")
+                throw new Error(err.message)
+            }
+            toast.error("Un Error desconocido ha ocurrido..")
+            throw new Error("Un Error desconocido ha ocurrido.")
+        }
+          finally{
+            setReviewBtnLoader(false)
+        }
+
+
+        
+    }
 
     // Función para crear la reseña 
     async function handleCreateReview(e: React.FormEvent){
@@ -107,7 +154,7 @@ const ReviewForm = ({product, loggedInUserEmail}: {product: Product, loggedInUse
     return (
         <div className="w-full mx-auto bg-white rounded-xl p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">
-                Valore y Reseñe este Producto
+                Valorar este Producto
             </h3>
 
             <div className="flex items-center justify-center gap-2 mb-4">
@@ -134,7 +181,7 @@ const ReviewForm = ({product, loggedInUserEmail}: {product: Product, loggedInUse
             </p>
 
             {/* Formulario para enviar la reseña */}
-            <form className="flex flex-col gap-4 mt-4" onSubmit={handleCreateReview}>
+            <form className="flex flex-col gap-4 mt-4" onSubmit={updateReviewForm ? handleUpdateReview :  handleCreateReview}>
                 <Textarea
                     //Nombrar el campo para obtener correctamente su contenido
                     value={customerReview} 
@@ -157,7 +204,8 @@ const ReviewForm = ({product, loggedInUserEmail}: {product: Product, loggedInUse
                     className="bg-black text-white w-full py-2 rounded-lg hover:bg-gray-900 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
 
                     {/*  */}
-                    {reviewBtnLoader ? "Añadiendo Reseña...": "Añadir Reseña"}
+                    {/* {reviewBtnLoader ? "Añadiendo Reseña...": "Añadir Reseña"} */}
+                    {updateReviewForm ? reviewBtnLoader ? "Acualizando..." :  "Editar Reseña" : reviewBtnLoader ? "Añadiendo..." : "Añadir Reseña"}
                 </Button>
             </form>
         </div>

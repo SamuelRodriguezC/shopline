@@ -9,11 +9,11 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { Review } from "@/lib/type"
+import { ProductDetail, Review } from "@/lib/type"
 import ReviewCard from "../productDetail/ReviewCard"
 import { User } from "next-auth"
 
-export function CollapsibleDemo({reviews, loggedInUser}: {reviews: Review[], loggedInUser: User | undefined | null}) {
+export function CollapsibleDemo({reviews, loggedInUser, product}: {reviews: Review[], loggedInUser: User | undefined | null, product: ProductDetail}) {
   const [isOpen, setIsOpen] = React.useState(false)
 
   return (
@@ -34,7 +34,7 @@ export function CollapsibleDemo({reviews, loggedInUser}: {reviews: Review[], log
         </CollapsibleTrigger>
       </div>
 
-     {!isOpen && <ReviewCard key={reviews[0].id} review={reviews[0]} loggedInUser={loggedInUser}/>}
+     {!isOpen && <ReviewCard key={reviews[0].id} review={reviews[0]} loggedInUser={loggedInUser} product={product}/>}
 
       <CollapsibleContent className="space-y-2">
             {reviews.map((review) => <ReviewCard key={review.id} review={review} loggedInUser={loggedInUser}/>)}

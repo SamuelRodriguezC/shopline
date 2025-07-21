@@ -8,13 +8,15 @@ import {
 } 
 from "@/components/ui/dialog";
 import Button from "./Button";
+import { PenIcon } from "lucide-react";
 
 interface Props {
   children: React.ReactNode;
   userHaveReview?: boolean;
+  updateReviewModal?: boolean
 }
 
-const Modal = ({ children, userHaveReview }: Props) => {
+const Modal = ({ children, userHaveReview, updateReviewModal}: Props) => {
 
   if(userHaveReview){
     return null
@@ -23,9 +25,18 @@ const Modal = ({ children, userHaveReview }: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="default-btn max-sm:text-[12px] max-sm:px-4 my-6">
-          Añadir Reseña
-        </Button>
+
+        {updateReviewModal ?
+            
+           (<button className="bg-gray-200 p-2 rounded-md cursor-pointer transition-all hover:bg-gray-300">
+              <PenIcon className="size-5 text-gray-600" />
+            </button>)
+
+        :
+            <Button className="default-btn max-sm:text-[12px] max-sm:px-4 my-6">
+              Añadir Reseña
+            </Button>
+        }
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -24,11 +24,11 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
   const product: ProductDetail = await getProductDetail(slug)
 
   // Promedio de calificación y total de reseñas, o 0 si no existen.
-  const averageRaing = product?.rating?.average_rating ?? 0
+  const averageRating = product?.rating?.average_rating ?? 0
   const reviewsCounter = product?.rating?.total_reviews ?? 0
 
   // Convierte el promedio de calificación a un número entero redondeando hacia abajo (para el sistema de estrellas). 
-  const starRating = Math.floor(averageRaing) 
+  const starRating = Math.floor(averageRating) 
 
   // Obtener la cantidad de reseñas recibidas por cada calificación (de 1 a 5 estrellas) ej: malo (5) reseñas
   const poor_ratign = product.poor_review 
@@ -67,9 +67,9 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
         <div className="w-full flex py-6 gap-6 flex-wrap items-center justify-between max-md:justify-center">
           {/* Contenedor para mostrar las Estrellas */}
           <div className="w-[250px] h-[250px] bg-gray-100 rounded-lg px-4 py-6 flex flex-col gap-3 items-center justify-center shadow-lg">
-            <h1 className="text-5xl font-bold text-gray-800">{averageRaing.toFixed(1)}</h1>
+            <h1 className="text-5xl font-bold text-gray-800">{averageRating.toFixed(1)}</h1>
             {/* Mostrar en plural o singular si el contador de reviews es mayor a 2 */}
-            <small className="text-gray-600 text-sm">de {reviewsCounter} {reviewsCounter > 2 ? "Reseñas": "Reseña"}</small>
+            <small className="text-gray-600 text-sm">de {reviewsCounter} {reviewsCounter < 2 ? "Reseña": "Reseñas"}</small>
 
             {/*Renderiza las estrellas de calificación, rellenándolas en negro si su valor es menor o igual al promedio. */}
             <div className="flex gap-2">
@@ -104,7 +104,7 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
           { loggedInUser  ?
           // Mostrar esto
               <Modal userHaveReview={userHaveReview}>
-              <ReviewForm product={product} loggedInUserEmail={loggedInUserEmail}/>
+              <ReviewForm review={undefined} product={product} loggedInUserEmail={loggedInUserEmail}/>
             </Modal>
           : //De lo contrario
           <Link href="/signin" className="default-btn max-sm:text-[20px] max-sm:px-4 my-6">
@@ -117,7 +117,7 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
       </div>
 
       {/*Mostrar las reseñas si hay */}
-      {reviews.length > 0 &&  <ReviewCardContainer reviews={reviews}/>}
+      {reviews.length > 0 &&  <ReviewCardContainer reviews={reviews} product={product}/>}
 
       {/* Sección de productos relacionados por categoría */}
       <ProductSection title="Productos de la Misma Categoría" similar_products={similar_products} detailPage/>

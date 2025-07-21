@@ -8,6 +8,34 @@ export async function signOutUser(){
     await signOut({redirectTo: "/"})
 }
 
+// Acción para actualizar una reseña
+export async function updateReviewAction(formData: FormData){
+    const rating = Number(formData.get("rating"))
+    const review = formData.get("review")
+    const review_id = formData.get("review_id")
+    const slug = formData.get("slug")
+
+    // Objeto de la reseña
+    const reviewObj = {rating, review}
+
+    // Intentar enviar los datos al back
+    try{
+        const response = await api.put(`update_review/${review_id}/`, reviewObj)
+        revalidatePath(`products/${slug}`)
+        return response.data
+    }
+    catch(err:unknown){
+        // Si el error es instacia de la clase Error
+        if(err instanceof Error){
+            // Lanzar el mensaje del error
+            throw new Error(err.message)
+        }
+        // De lo contrario lanzar un mensaje generico
+        throw new Error("Un Error Desconocido ha Ocurrido") 
+     }
+}
+
+
 // Crear un acción de servidor para permitir a los usuarios añadir reseñas 
 // a un producto
 export async function createReviewAction(formData: FormData){
