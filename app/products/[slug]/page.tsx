@@ -38,6 +38,9 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
   // Obtener las reseñas del producto
   const reviews = product.reviews
 
+  // Productos similares
+  const similar_products = product.similar_products
+
   const stars = [1, 2, 3, 4, 5]
 
   return (
@@ -97,7 +100,7 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
       {reviews.length > 0 &&  <ReviewCardContainer reviews={reviews}/>}
 
       {/* Sección de productos relacionados por categoría */}
-      <ProductSection title="Productos de la Misma Categoría" />
+      <ProductSection title="Productos de la Misma Categoría" similar_products={similar_products} detailPage/>
     </>
   );
 };

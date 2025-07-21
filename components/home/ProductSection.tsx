@@ -4,12 +4,16 @@ import { getProducts } from "@/lib/api";
 import { Product } from "@/lib/type";
 
 interface Props{
-  title: string
+  title: string;
+  similar_products: Product[];
+  detailPage?: boolean
 }
 
-const ProductSection = async ({title}: Props) => {
+const ProductSection = async ({title, similar_products, detailPage}: Props) => {
 
-  const products = await getProducts()
+  // Si estamos en una página de detalle (detailPage === true), usamos los productos similares pasados por props.
+  // De lo contrario, obtenemos la lista completa de productos llamando a la función asincrónica getProducts().
+  const products = detailPage ? similar_products : await getProducts()
   // console.log(products)
 
   return (
@@ -18,7 +22,7 @@ const ProductSection = async ({title}: Props) => {
         {title}
       </h2>
 
-      {/* Content */}
+      {/* Contenido */}
       <div className="flex-center flex-wrap gap-4">
         {products.map((product: Product) => <ProductCard key={product.id} product={product}/>)}
 
