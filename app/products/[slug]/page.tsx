@@ -1,4 +1,5 @@
 
+import { auth } from "@/auth";
 import ProductSection from "@/components/home/ProductSection";
 import ProductInfo from "@/components/productDetail/ProductInfo";
 import RatingProgressBar from "@/components/productDetail/RatingProgressBar";
@@ -9,6 +10,7 @@ import { getProductDetail } from "@/lib/api";
 import { ProductDetail } from "@/lib/type";
 import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 // Componente de página del producto (usado en la ruta dinámica). 
@@ -42,6 +44,10 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
   const similar_products = product.similar_products
 
   const stars = [1, 2, 3, 4, 5]
+
+  // Obtener la sesión actual (si hay un usuario autenticado)
+  const session = await auth()
+  const loggedInUser = session?.user
 
   return (
     <>
@@ -88,9 +94,17 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
 
         {/* Modal con formulario para reseña */}
         <div className="flex justify-center items-center w-full mb-5">
-          <Modal>
-            <ReviewForm />
-          </Modal>
+          {/* Si hay un usuario autenticado  */}
+          { loggedInUser  ?
+          // Mostrar esto
+              <Modal>
+              <ReviewForm />
+            </Modal>
+          : //De lo contrario
+          <Link href="/signin" className="default-btn max-sm:text-[20px] max-sm:px-4 my-6">
+           Inicia Sesión para Añadir 
+          </Link>
+          }
         </div>
 
         {/*Final del formulario */}
