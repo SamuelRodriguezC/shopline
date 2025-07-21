@@ -37,8 +37,8 @@ const ReviewCard = ({review, loggedInUser, product}: {review: Review, loggedInUs
 
         {/* Información que se muestra cuando la reseña ha sido actualizada */}
         <span className="text-sm text-gray-500">
-          {review.created == review.updated || <small className="block">Editado...</small>}
-          <small>{timeAgo(review.updated)}</small>
+          {review.created.slice(0, 20) == review.updated.slice(0, 20) ||( <small className="block">Editado...</small>)}
+          <small>{timeAgo(review.created)}</small>
         </span>
       </div>
 

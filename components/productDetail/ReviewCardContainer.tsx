@@ -1,6 +1,5 @@
 import React from 'react'
-import ReviewCard from './ReviewCard'
-import { Product, ProductDetail, Review } from '@/lib/type'
+import {  ProductDetail, Review } from '@/lib/type'
 import { auth } from '@/auth'
 import { CollapsibleDemo } from '../uiComponents/Collapse'
 

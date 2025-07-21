@@ -37,7 +37,7 @@ export function CollapsibleDemo({reviews, loggedInUser, product}: {reviews: Revi
      {!isOpen && <ReviewCard key={reviews[0].id} review={reviews[0]} loggedInUser={loggedInUser} product={product}/>}
 
       <CollapsibleContent className="space-y-2">
-            {reviews.map((review) => <ReviewCard key={review.id} review={review} loggedInUser={loggedInUser}/>)}
+            {reviews.map((review) => <ReviewCard key={review.id} review={review} loggedInUser={loggedInUser} product={product}/>)}
       </CollapsibleContent>
     </Collapsible>
   )
