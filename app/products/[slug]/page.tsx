@@ -48,6 +48,12 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
   // Obtener la sesión actual (si hay un usuario autenticado)
   const session = await auth()
   const loggedInUser = session?.user
+  // Obtener el email del usuario en sesión 
+  const loggedInUserEmail = loggedInUser?.email
+
+  // Verificar si una review de un usuario es la misma de usuario autenticado
+  const userHaveReview = reviews.some((review) => review.user.email === loggedInUserEmail)
+
 
   return (
     <>
@@ -97,8 +103,8 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
           {/* Si hay un usuario autenticado  */}
           { loggedInUser  ?
           // Mostrar esto
-              <Modal>
-              <ReviewForm />
+              <Modal userHaveReview={userHaveReview}>
+              <ReviewForm product={product} loggedInUserEmail={loggedInUserEmail}/>
             </Modal>
           : //De lo contrario
           <Link href="/signin" className="default-btn max-sm:text-[20px] max-sm:px-4 my-6">

@@ -4,7 +4,7 @@ import axios from "axios";
 export const BASE_URL = "http://127.0.0.1:8000" 
 
 // Crear instancia de axios para usarla como cliente HTTP
-const api = axios.create({
+export const api = axios.create({
     baseURL: "http://127.0.0.1:8000"
 })
 
@@ -25,7 +25,6 @@ export async function getExtistingUser(email: string | null | undefined){
         }
         // De lo contrario lanzar un mensaje generico
         throw new Error("Un Error Desconocido ha Ocurrido") 
-
     }
 }
 

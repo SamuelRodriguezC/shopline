@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 // Importación de fuentes personalizadas desde Google Fonts usando el módulo de Next.js
 import { Geist, Geist_Mono } from "next/font/google";
 import { Ubuntu } from 'next/font/google'
+import { ToastContainer } from 'react-toastify'
 
 
 // Importación global de estilos CSS
@@ -53,6 +54,8 @@ export default function RootLayout({
         <main className="w-full ">
            {/* Barra de navegación global */}
           <NavBarContainer/>
+
+          <ToastContainer/>
 
            {/* Contenido dinámico según la ruta */}
           {children}

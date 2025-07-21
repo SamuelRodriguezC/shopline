@@ -11,9 +11,15 @@ import Button from "./Button";
 
 interface Props {
   children: React.ReactNode;
+  userHaveReview?: boolean;
 }
 
-const Modal = ({ children }: Props) => {
+const Modal = ({ children, userHaveReview }: Props) => {
+
+  if(userHaveReview){
+    return null
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>

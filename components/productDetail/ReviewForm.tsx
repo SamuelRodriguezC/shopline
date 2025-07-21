@@ -6,6 +6,10 @@ import React, { useState } from "react";  // React y el hook useState
 import Button from "../uiComponents/Button";  // Botón personalizado
 import { cn } from "@/lib/utils";  // Función para combinar clases CSS
 import { Textarea } from "../ui/textarea";  // Textarea personalizado (probablemente shadcn o tuyo)
+import { Product } from "@/lib/type";
+import { createReviewAction } from "@/lib/actions";
+import { toast } from 'react-toastify'
+
 
 
 // Tipado para las props que usan las funciones de hover y click
@@ -14,7 +18,17 @@ interface Props {
     review: string;
 }
 
-const ReviewForm = () => {
+const ReviewForm = ({product, loggedInUserEmail}: {product: Product, loggedInUserEmail: string | null | undefined}) => {
+
+    // Extraer el id e slug del producto pasado desde la pagina
+    const {id, slug} = product
+
+    // Obtener los campos del formulario (review e usuario que realizó la acción)
+    const[customerReview, setCustomerReview] = useState("") 
+
+    // Estado para controlar la animación o deshabilitación del botón mientras se envía la reseña
+    const [reviewBtnLoader, setReviewBtnLoader] = useState(false);
+
     // Estados para hover temporal de estrellas y texto
     const [hoverRating, setHoverRating] = useState(0);
     const [hoverReview, setHoverReview] = useState("");
@@ -50,6 +64,46 @@ const ReviewForm = () => {
         { rating: 5, review: "Excelente" },
     ];
 
+    // Función para crear la reseña 
+    async function handleCreateReview(e: React.FormEvent){
+        // Prevenir el comportamiento por defecto del formulario (recarga de página)
+        e.preventDefault()
+
+        // Activar el loader del botón para indicar al usuario que la acción está en proceso
+        setReviewBtnLoader(true)
+
+        // Crear un objeto FormData para enviar los datos al backend
+        const formData = new FormData()
+
+        // Obtener los datos necesario para enviar
+        formData.set("product_id" , String(id))
+        formData.set("slug" , slug)
+        formData.set("review", customerReview)
+        formData.set("rating", String(clickedRating))
+        formData.set("email", String(loggedInUserEmail))
+
+        // Intentar crear la reseña solicitud al back por medio de la función (createRe..) definida en actions.ts
+        try{
+            await createReviewAction(formData);
+            // Mostrar notificación 
+            toast.success("Reseña Añadida Correctamente")
+        }
+        // Mostrar mensaje de error en caso de una falla
+        catch(err:unknown){
+            if(err instanceof Error){
+                toast.error("Un error ha ocurrido, intentalo más tarde.")
+                throw new Error(err.message)
+            }
+            toast.error("Un Error desconocido ha ocurrido..")
+            throw new Error("Un Error desconocido ha ocurrido.")
+        }
+        // Finalmente, se desactiva el loader del botón sin importar el resultado del intento de crear la reseña
+        finally{
+            setReviewBtnLoader(false)
+        }
+
+    }
+
     return (
         <div className="w-full mx-auto bg-white rounded-xl p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">
@@ -80,16 +134,30 @@ const ReviewForm = () => {
             </p>
 
             {/* Formulario para enviar la reseña */}
-            <form className="flex flex-col gap-4 mt-4">
+            <form className="flex flex-col gap-4 mt-4" onSubmit={handleCreateReview}>
                 <Textarea
+                    //Nombrar el campo para obtener correctamente su contenido
+                    value={customerReview} 
+                    // Cuando el usuario escribe en el textarea, este onChange captura el evento,
+                    // toma el valor actual del campo (e.target.value) y actualiza el estado customerReview
+                    // manteniendo sincronizado el valor del input con el estado interno del componente.
+                    onChange={(e) => setCustomerReview(e.target.value)}
                     name="content"
                     className="border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-300 rounded-lg p-3 w-full resize-none"
                     placeholder="Escribe tu Reseña"
                     required
                 />
 
-                <Button className="bg-black text-white w-full py-2 rounded-lg hover:bg-gray-900 transition">
-                    Añadir reseña
+                <Button 
+                    // Deshabilitar el botón si:
+                    // - No se ha seleccionado una calificación (clickedRating < 1)
+                    // - El textarea está vacío o solo contiene espacios en blanco
+                    // - El botón está en estado de carga (reviewBtnLoader es true)
+                    disabled={  clickedRating < 1  ||  ( customerReview && customerReview.trim()).length==0 || reviewBtnLoader } 
+                    className="bg-black text-white w-full py-2 rounded-lg hover:bg-gray-900 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+
+                    {/*  */}
+                    {reviewBtnLoader ? "Añadiendo Reseña...": "Añadir Reseña"}
                 </Button>
             </form>
         </div>
