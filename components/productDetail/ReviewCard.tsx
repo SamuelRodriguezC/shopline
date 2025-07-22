@@ -1,17 +1,42 @@
 import { ProductDetail, Review } from "@/lib/type";
 import { cn, timeAgo } from "@/lib/utils";
-import { Star, TrashIcon } from "lucide-react";
+import { Star} from "lucide-react";
 import { User } from "next-auth";
 import Image from "next/image";
 import React from "react";
 import Modal from "../uiComponents/Modal";
 import ReviewForm from "./ReviewForm";
+import DeleteModal from "../uiComponents/DeleteModal";
+import { deleteReviewAction } from "@/lib/actions";
+import { toast } from "react-toastify";
 
 const ReviewCard = ({review, loggedInUser, product}: {review: Review, loggedInUser: User | undefined | null, product: ProductDetail}) => {
   const starArray = [1, 2, 3, 4, 5];
   
   // Obtener el email del usuario en sesión 
   const loggedInUserEmail = loggedInUser?.email
+
+  // función para eliminar la reseña
+  async function handleDeleteReview(){
+    const formData = new FormData()
+    formData.set("review_id", String(review.id))
+    formData.set("slug", product.slug)
+
+    try{
+        await deleteReviewAction(formData)
+        toast.success("Reseña Eliminada Correctamente")
+    }
+    catch(err: unknown){
+      if(err instanceof Error){
+        toast.error("Ups Ha Ocurrido un Error Intentalo Más Tarde")
+        throw new Error(err.message)
+      }
+      toast.error("Ha ocurrido un Error Desconocido")
+      throw new Error("Ha ocurrido un Error Desconocido")
+    }
+
+
+  }
 
   return (
     <div className="w-full bg-white shadow-lg px-6 py-6 rounded-lg flex flex-col gap-4 mb-6">
@@ -20,9 +45,10 @@ const ReviewCard = ({review, loggedInUser, product}: {review: Review, loggedInUs
         {loggedInUser?.email == review.user.email && <span className="flex gap-4">
           <>
             {/* Botón para borrar */}
-            <button className="bg-gray-200 p-2 rounded-md cursor-pointer transition-all hover:bg-gray-300">
+            <DeleteModal handleDeleteReview={handleDeleteReview}/>
+            {/* <button className="bg-gray-200 p-2 rounded-md cursor-pointer transition-all hover:bg-gray-300">
               <TrashIcon className="size-5 text-gray-600" />
-            </button>
+            </button> */}
 
             {/* Botón para editar */}
             <Modal updateReviewModal>
