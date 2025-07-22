@@ -1,5 +1,6 @@
 "use client"
 
+import { api } from "@/lib/api";
 import { generateRandomString } from "@/lib/utils";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
@@ -25,6 +26,26 @@ export function CartProvider({children} : {children: React.ReactNode}) {
 
     // Estado para contar la cantidad de ítems en el carrito
     const [cartItemCount, setCartItemsCount] = useState(0)
+
+    useEffect(() => {
+        async function getCartItemsCount() {
+            
+            try{
+                const response = await api.get(`get_cart_stat?cart_code=${cartCode}`)
+                setCartItemsCount(response.data.num_of_items)
+                return response.data
+            }
+            catch(err: unknown){
+                if(err instanceof Error){
+                    throw new Error(err.message)
+                }
+                throw new Error("Un Error Desconocido ha Ocurrido")
+            }
+
+        }
+
+        getCartItemsCount()
+    }, [cartCode])
 
     // Hook que se ejecuta una vez cuando el componente se monta (comportamiento similar a componentDidMount)
     useEffect(() => {
