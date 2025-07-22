@@ -12,7 +12,7 @@ import { toast } from 'react-toastify'
 
 const ProductInfo = ({product}: {product: ProductDetail}) => {
 
-  const { cartCode } = useCart()
+  const { cartCode, setCartItemsCount } = useCart()
   const [ addToCartLoader, setAddToCartLoader ] = useState(false)
   const [ addedToCart , setAddedToCart ] = useState(false)
 
@@ -43,10 +43,11 @@ const ProductInfo = ({product}: {product: ProductDetail}) => {
     const formData = new FormData();
     formData.set("cart_code", cartCode ? cartCode : "")
     formData.set("product_id", String(product.id))
-
+    
     try{
       const response = await addToCartAction(formData)
       setAddedToCart(true)
+      setCartItemsCount(curr => curr + 1)
       toast.success("Producto Añadido al Carrito")
       return response
     }

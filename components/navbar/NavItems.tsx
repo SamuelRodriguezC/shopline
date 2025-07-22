@@ -6,6 +6,7 @@ import Image from "next/image";
 import { signOutUser } from "@/lib/actions";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { useCart } from "@/context/CartContext";
 
 
 
@@ -42,7 +43,9 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
       await signOutUser();
     }
   };
-  
+
+  const { cartItemCount } =  useCart()
+
   return (
     <div className={cn("flex items-center justify-center gap-6", mobile ? "flex-col" : "flex-row")}>
 
@@ -74,9 +77,9 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
       <div className="relative flex items-center h-[60px] w-[60px] justify-center cursor-pointer">
         <FaCartShopping className="text-4xl" />
 
-        <span className="absolute top-0 right-0 px-2 py-0.5 bg-black rounded-full text-white">
-          3
-        </span>
+        {cartItemCount == 0 || <span className="absolute top-0 right-0 px-2 py-0.5 bg-black rounded-full text-white">
+          {cartItemCount}
+        </span>}
       </div>
     </div>
   );

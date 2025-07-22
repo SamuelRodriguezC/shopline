@@ -1,14 +1,14 @@
 "use client"
 
 import { generateRandomString } from "@/lib/utils";
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 
 // Define la interfaz que describe el contenido del contexto del carrito
 interface CartContextProps {
     cartCode: string | null;    // Código único del carrito (se almacena en localStorage)
     cartItemCount: number; // Cantidad de ítems en el carrito
-    setCartItemCount: (curr: number) => void; // Función para actualizar la cantidad de ítems
+    setCartItemsCount: React.Dispatch<React.SetStateAction<number>>; // Función para actualizar la cantidad de ítems
     clearCartCode: () => void;  // Función para limpiar el código del carrito
 }
 
@@ -24,7 +24,7 @@ export function CartProvider({children} : {children: React.ReactNode}) {
     const [cartCode, setCartCode] =  useState<string | null>(null)
 
     // Estado para contar la cantidad de ítems en el carrito
-    const [cartItemCount, setCartItemCount] = useState(0)
+    const [cartItemCount, setCartItemsCount] = useState(0)
 
     // Hook que se ejecuta una vez cuando el componente se monta (comportamiento similar a componentDidMount)
     useEffect(() => {
@@ -49,7 +49,7 @@ export function CartProvider({children} : {children: React.ReactNode}) {
 
     // Devuelve el proveedor del contexto con los valores y funciones necesarias
     return (
-        <CartContext.Provider value={{cartCode, cartItemCount, setCartItemCount, clearCartCode}}>
+        <CartContext.Provider value={{cartCode, cartItemCount, setCartItemsCount, clearCartCode}}>
             {children}
         </CartContext.Provider>
     )
