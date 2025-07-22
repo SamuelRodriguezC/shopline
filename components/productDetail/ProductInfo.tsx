@@ -7,7 +7,7 @@ import Button from '../uiComponents/Button'
 import { ProductDetail } from '@/lib/type'
 import { api, BASE_URL } from '@/lib/api'
 import { useCart } from '@/context/CartContext'
-import { addToCartAction } from '@/lib/actions'
+import { addToCartAction, addToWishlistAction } from '@/lib/actions'
 import { toast } from 'react-toastify'
 import WishlistTooltip from '../uiComponents/WishlistTooltip'
 
@@ -15,6 +15,7 @@ const ProductInfo = ({product, loggedInUserEmail}: {product: ProductDetail, logg
 
   const { cartCode, setCartItemsCount } = useCart()
   const [ addToCartLoader, setAddToCartLoader ] = useState(false)
+  const [ addedToWishList, setAddedToWishList] = useState(false)
   const [ addedToCart , setAddedToCart ] = useState(false)
 
   useEffect(() => {
@@ -64,6 +65,24 @@ const ProductInfo = ({product, loggedInUserEmail}: {product: ProductDetail, logg
 
   }
 
+  async function handleAddToWishlist(){
+    const formData = new FormData()
+    formData.set("product_id", String(product.id))
+    formData.set("email", loggedInUserEmail ? loggedInUserEmail : "")
+
+    try{
+      await addToWishlistAction(formData)
+      setAddedToWishList(curr => !curr)
+      toast.success("Producto Añadido a la lista de Deseos")
+    }
+    catch(err: unknown){
+      if(err instanceof Error){
+        throw new Error(err.message)
+      }
+      throw new Error("Un Eror Desconocido ha Ocurrido")
+    }
+  }
+
   return (
     <div className="bg-gray-50 padding-x py-10 flex items-start flex-wrap gap-12 main-max-width padding-x mx-auto">
       {/* Product Image */}
@@ -100,13 +119,15 @@ const ProductInfo = ({product, loggedInUserEmail}: {product: ProductDetail, logg
                 {addToCartLoader ? "Añadiendo..." : addedToCart ? "Añadido al Carrito" : "Añadir al Carrito"}
             </Button>
 
-            {loggedInUserEmail ? 
-              <Button className="wish-btn">
-                Añadir a la lista de deseos
+            {loggedInUserEmail ? (
+              <Button handleClick={handleAddToWishlist} className="wish-btn">
+                {addedToWishList ? "Quitar de la lista de Deseos" : "Añadir a lista de Deseos"}
             </Button>
+            )
             :
-
+            (
             <WishlistTooltip loggedInUserEmail={loggedInUserEmail}/>
+            )
             }
         </div>
         

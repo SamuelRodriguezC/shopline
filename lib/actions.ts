@@ -113,3 +113,21 @@ export async function addToCartAction(formData: FormData){
     }
 
 }
+
+
+export async function addToWishlistAction(formData: FormData) {
+    const email = formData.get("email")
+    const product_id = formData.get("product_id")
+    const whishlistItem = {email, product_id}
+
+    try{
+        const response = await api.post("add_to_wishlist/", whishlistItem)
+        return response.data
+    }
+    catch(err: unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
+    }
+}
