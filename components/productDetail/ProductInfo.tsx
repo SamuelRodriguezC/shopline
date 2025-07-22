@@ -1,11 +1,38 @@
 
+"use client"
+
 import React from 'react'
 import Image from "next/image"
 import Button from '../uiComponents/Button'
 import { ProductDetail } from '@/lib/type'
 import { BASE_URL } from '@/lib/api'
+import { useCart } from '@/context/CartContext'
+import { addToCartAction } from '@/lib/actions'
+import { toast } from 'react-toastify'
 
 const ProductInfo = ({product}: {product: ProductDetail}) => {
+
+  const { cartCode } = useCart()
+
+  async function handleAddToCart() {
+    const formData = new FormData();
+    formData.set("cart_code", cartCode ? cartCode : "")
+    formData.set("product_id", String(product.id))
+
+    try{
+      const response = await addToCartAction(formData)
+      toast.success("Producto Añadido al Carrito")
+      return response
+    }
+    catch(err: unknown){
+      if(err instanceof Error){
+        throw new Error(err.message)
+      }
+      throw new Error("Un Eror Desconocido ha Ocurrido")
+    }
+
+  }
+
   return (
     <div className="bg-gray-50 padding-x py-10 flex items-start flex-wrap gap-12 main-max-width padding-x mx-auto">
       {/* Product Image */}
@@ -38,7 +65,7 @@ const ProductInfo = ({product}: {product: ProductDetail}) => {
 
         {/* Buttons */}
         <div className='flex py-3 items-center gap-4 flex-wrap'>
-            <Button className="default-btn">
+            <Button className="default-btn" handleClick={handleAddToCart}>
                 Añadir al carrito
             </Button>
 

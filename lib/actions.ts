@@ -94,3 +94,22 @@ export async function deleteReviewAction(formData: FormData) {
         throw new Error("Un Error Desconocido ha Ocurrido")
     }
 }
+
+
+export async function addToCartAction(formData: FormData){
+    const cart_code = formData.get("cart_code")
+    const product_id = formData.get("product_id")
+    const cart_item = {cart_code, product_id}
+
+    try{
+        const response = await api.post("add_to_cart/", cart_item)
+        return response.data
+    }
+    catch(err: unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
+    }
+
+}

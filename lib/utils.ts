@@ -27,5 +27,13 @@ export function timeAgo(timestamp: string): string{
     }
   }
   return 'Justo Ahora';
+}
 
+export function generateRandomString(length = 10){
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk¿lmnopqrstuvwxyz0123456789";
+  let result = '';
+  for (let i = 0; i < length; i++){
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
 }

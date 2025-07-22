@@ -14,6 +14,7 @@ import "./globals.css";
 import NavBar from "@/components/navbar/NavBar";
 import NavBarContainer from "@/components/navbar/NavBarContainer";
 import Footer from "@/components/footer/Footer";
+import { CartProvider } from "@/context/CartContext";
 
 
 
@@ -52,6 +53,10 @@ export default function RootLayout({
     <html lang="en" className={ubuntu.className}>
       <body className={``}>
         <main className="w-full ">
+
+          <CartProvider children={undefined}>
+
+
            {/* Barra de navegación global */}
           <NavBarContainer/>
 
@@ -62,6 +67,8 @@ export default function RootLayout({
 
           {/* Pie de página global */}
           <Footer/>
+          
+          </CartProvider>
         </main>
       </body>
     </html>
