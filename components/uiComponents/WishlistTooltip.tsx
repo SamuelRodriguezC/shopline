@@ -13,7 +13,7 @@ const WishlistTooltip = ({loggedInUserEmail}: {loggedInUserEmail: string | null 
             Añadir a la lista de deseos              
         </TooltipTrigger>
         <TooltipContent>
-            <p>Inicia Sesión para Añadir a lista de deseados</p>
+            <p>Inicia Sesión para Añadir a lista de deseos</p>
         </TooltipContent>
     </Tooltip>
     )

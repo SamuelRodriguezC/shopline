@@ -4,20 +4,20 @@ import PurchasedOrder from '@/components/order/PurchasedOrder'
 import React from 'react'
 
 
-// Página de perfil del usuario, muestra las órdenes compradas y la lista de deseados.
+// Página de perfil del usuario, muestra las órdenes compradas y la lista de deseos.
 const ProfilePage = () => {
   return (
     <>
     {/* Sección de órdenes compradas */}
     <PurchasedOrder />
 
-  {/* Sección de lista de deseados */}
+  {/* Sección de lista de deseos */}
     <section className="main-max-width padding-x mx-auto my-10">
     <h2 className="text-center text-2xl font-bold text-gray-800 mt-2 mb-4 max-sm:text-[16px]">
-        Lista de Deseados
+        Lista de Deseos
     </h2>
 
-    {/* Contenedor de productos deseados */}
+    {/* Contenedor de productos deseos */}
     <div className="flex items-center w-[full] gap-4 px-6 py-6 custom-overflow border border-gray-200 bg-white rounded-lg shadow-sm">
      
      <MiniProductCard/>
