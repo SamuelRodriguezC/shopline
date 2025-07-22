@@ -9,8 +9,9 @@ import { api, BASE_URL } from '@/lib/api'
 import { useCart } from '@/context/CartContext'
 import { addToCartAction } from '@/lib/actions'
 import { toast } from 'react-toastify'
+import WishlistTooltip from '../uiComponents/WishlistTooltip'
 
-const ProductInfo = ({product}: {product: ProductDetail}) => {
+const ProductInfo = ({product, loggedInUserEmail}: {product: ProductDetail, loggedInUserEmail: string | null | undefined}) => {
 
   const { cartCode, setCartItemsCount } = useCart()
   const [ addToCartLoader, setAddToCartLoader ] = useState(false)
@@ -99,9 +100,14 @@ const ProductInfo = ({product}: {product: ProductDetail}) => {
                 {addToCartLoader ? "Añadiendo..." : addedToCart ? "Añadido al Carrito" : "Añadir al Carrito"}
             </Button>
 
-            <Button className="wish-btn">
+            {loggedInUserEmail ? 
+              <Button className="wish-btn">
                 Añadir a la lista de deseos
             </Button>
+            :
+
+            <WishlistTooltip loggedInUserEmail={loggedInUserEmail}/>
+            }
         </div>
         
       </div>

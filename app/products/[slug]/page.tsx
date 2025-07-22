@@ -57,7 +57,7 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
 
   return (
     <>
-      <ProductInfo product={product}/>
+      <ProductInfo product={product} loggedInUserEmail={loggedInUserEmail}/>
 
       <div className="main-max-width padding-x mx-auto">
         <h3 className="font-semibold text-xl text-center my-6 text-gray-800">
