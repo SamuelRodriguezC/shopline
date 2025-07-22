@@ -1,11 +1,11 @@
 
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from "next/image"
 import Button from '../uiComponents/Button'
 import { ProductDetail } from '@/lib/type'
-import { BASE_URL } from '@/lib/api'
+import { api, BASE_URL } from '@/lib/api'
 import { useCart } from '@/context/CartContext'
 import { addToCartAction } from '@/lib/actions'
 import { toast } from 'react-toastify'
@@ -15,6 +15,27 @@ const ProductInfo = ({product}: {product: ProductDetail}) => {
   const { cartCode } = useCart()
   const [ addToCartLoader, setAddToCartLoader ] = useState(false)
   const [ addedToCart , setAddedToCart ] = useState(false)
+
+  useEffect(() => {
+
+    async function handleAddToCart(){
+
+      try{
+        const response = await api.get(`product_in_cart?cart_code=${cartCode}&product_id=${product.id}`)
+        setAddedToCart(response.data.product_in_cart)
+        return response.data
+      }
+      catch(err: unknown){
+      if(err instanceof Error){
+        throw new Error(err.message)
+      }
+      throw new Error("Un Eror Desconocido ha Ocurrido")
+    }
+
+  }
+  handleAddToCart()
+
+  }, [cartCode, product.id])
 
 
   async function handleAddToCart() {
