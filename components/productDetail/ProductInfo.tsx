@@ -1,7 +1,7 @@
 
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from "next/image"
 import Button from '../uiComponents/Button'
 import { ProductDetail } from '@/lib/type'
@@ -13,14 +13,19 @@ import { toast } from 'react-toastify'
 const ProductInfo = ({product}: {product: ProductDetail}) => {
 
   const { cartCode } = useCart()
+  const [ addToCartLoader, setAddToCartLoader ] = useState(false)
+  const [ addedToCart , setAddedToCart ] = useState(false)
+
 
   async function handleAddToCart() {
+    setAddToCartLoader(true)
     const formData = new FormData();
     formData.set("cart_code", cartCode ? cartCode : "")
     formData.set("product_id", String(product.id))
 
     try{
       const response = await addToCartAction(formData)
+      setAddedToCart(true)
       toast.success("Producto Añadido al Carrito")
       return response
     }
@@ -29,6 +34,9 @@ const ProductInfo = ({product}: {product: ProductDetail}) => {
         throw new Error(err.message)
       }
       throw new Error("Un Eror Desconocido ha Ocurrido")
+    }
+    finally{
+      setAddToCartLoader(false)
     }
 
   }
@@ -65,8 +73,8 @@ const ProductInfo = ({product}: {product: ProductDetail}) => {
 
         {/* Buttons */}
         <div className='flex py-3 items-center gap-4 flex-wrap'>
-            <Button className="default-btn" handleClick={handleAddToCart}>
-                Añadir al carrito
+            <Button className="default-btn disabled:opacity-50 disabled:cursor-not-allowed" handleClick={handleAddToCart} disabled={addToCartLoader || addedToCart}>
+                {addToCartLoader ? "Añadiendo..." : addedToCart ? "Añadido al Carrito" : "Añadir al Carrito"}
             </Button>
 
             <Button className="wish-btn">
