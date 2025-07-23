@@ -1,4 +1,5 @@
 import axios from "axios";
+import { redirect } from "next/navigation";
 
 // URL base del backend para centralizar y facilitar las solicitudes HTTP desde el frontend.
 export const BASE_URL = "http://127.0.0.1:8000"
@@ -119,6 +120,10 @@ export async function getCart(cart_code: string) {
     }
     catch (err: unknown) {
         if (err instanceof Error) {
+            // Si el error es 404, redirigir al carrito
+            if(err.message == "Request failed with status code 404"){
+                redirect("/cart")
+            }
             throw new Error(err.message)
         }
         throw new Error("Un Error Desconocido ha Ocurrido")

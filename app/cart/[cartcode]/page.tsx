@@ -12,10 +12,14 @@ const CartItemPage = async ({params}: {params: Promise<{cartcode: string}>}) => 
   // Llama a la API para obtener los detalles del carrito pasandole el código del carrito
   const cart:CartType = await getCart(cartcode)
 
+  // Obtener los items del carrito
   const cartItems = cart.cartitems
 
-
+  // Obtener la cantidad de items del carrito
   const cartitems_count = cart.cartitems.length;
+
+  // Obtener el total del carrito
+  const total_cart = cart.cart_total;
 
   return (
     <div className="main-max-width padding-x mx-auto py-9">
@@ -30,7 +34,7 @@ const CartItemPage = async ({params}: {params: Promise<{cartcode: string}>}) => 
         </div>
         {/* Cartitem */}
 
-        <CartSummary />
+        <CartSummary total={total_cart} />
       </div>
     </div>
   );

@@ -6,6 +6,9 @@ import { CartItemType } from '@/lib/type'
 import { BASE_URL } from '@/lib/api'
 
 const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
+
+  const sub_total_Format = (cartItem.sub_total).toFixed(3)
+
   return (
     <div className="flex items-center justify-between gap-6 border-b border-gray-200 py-4 mb-6 w-full flex-wrap bg-white px-4 rounded-lg shadow-sm">
     
@@ -48,7 +51,7 @@ const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
         </div>
     
         {/* Subtotal */}
-        <p className="text-lg font-semibold text-gray-800">${100.00}</p>
+        <p className="text-lg font-semibold text-gray-800">${sub_total_Format}</p>
     
         {/* Boton de quitar producto */}
         <button 
