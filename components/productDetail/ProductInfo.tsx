@@ -88,6 +88,28 @@ const ProductInfo = ({ product, loggedInUserEmail }: { product: ProductDetail, l
     }
   }
 
+  useEffect(() => {
+
+    async function handleProductInWishlist(){
+      if(loggedInUserEmail){
+        try{
+          const response = await api.get(`product_in_wishlist?email=${loggedInUserEmail}&product_id=${product.id}`)
+          setAddedToWishList(response.data.product_in_wishlist)
+          return response.data
+        }
+        catch (err: unknown) {
+          if (err instanceof Error) {
+            throw new Error(err.message)
+          }
+          throw new Error("Un Eror Desconocido ha Ocurrido")
+        }
+      }
+    }
+
+    handleProductInWishlist()
+
+  }, [loggedInUserEmail, product.id])
+
   return (
     <div className="bg-gray-50 padding-x py-10 flex items-start flex-wrap gap-12 main-max-width padding-x mx-auto">
       {/* Product Image */}
