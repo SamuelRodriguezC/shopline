@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import Image from "next/image"
 import { Minus, Plus, X } from 'lucide-react'
 import Button from '../uiComponents/Button'
@@ -8,6 +9,16 @@ import { BASE_URL } from '@/lib/api'
 const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
 
   const sub_total_Format = (cartItem.sub_total).toFixed(3)
+
+  const [quantity, setQuantity] = useState(cartItem.quantity)
+
+  function increaseQuantity(){
+    setQuantity(curr => curr + 1)
+  }
+  
+  function decreaseQuantity(){
+    setQuantity(curr => curr > 1 ? curr - 1 : 0)
+  }
 
   return (
     <div className="flex items-center justify-between gap-6 border-b border-gray-200 py-4 mb-6 w-full flex-wrap bg-white px-4 rounded-lg shadow-sm">
@@ -31,20 +42,20 @@ const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
         {/* Selector de Cantidad */}
         <div className="flex items-center justify-center gap-2 bg-gray-100 px-2 py-1 rounded-md">
           {/* Disminuir la Cantidad */}
-          <button 
-            className="p-2 rounded-md bg-white border hover:bg-gray-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          <button onClick={decreaseQuantity} disabled={quantity <= 1 }
+            className="p-2 rounded-md bg-white border hover:bg-gray-200 cursor-pointer transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Minus className="w-5 h-5 text-gray-700" />
           </button>
     
           {/* Indicador de cantidad*/}
           <div className="w-[50px] h-[40px] flex items-center justify-center font-medium bg-white border border-gray-300 rounded-md shadow-sm">
-            {cartItem.quantity}
+            {quantity}
           </div>
     
           {/* Boton de crementar*/}
-          <button 
-            className="p-2 rounded-md bg-white border hover:bg-gray-200 transition"
+          <button onClick={increaseQuantity}
+            className="p-2 rounded-md bg-white border hover:bg-gray-200 cursor-pointer transition"
           >
             <Plus className="w-5 h-5 text-gray-700" />
           </button>
