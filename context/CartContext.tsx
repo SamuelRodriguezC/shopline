@@ -44,7 +44,11 @@ export function CartProvider({children} : {children: React.ReactNode}) {
 
         }
 
-        getCartItemsCount()
+        // Solo llama a la API si ya existe el cartCode
+        if (cartCode) {
+            getCartItemsCount()
+        }
+
     }, [cartCode])
 
     // Hook que se ejecuta una vez cuando el componente se monta (comportamiento similar a componentDidMount)
