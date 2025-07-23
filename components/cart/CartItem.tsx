@@ -2,15 +2,17 @@ import React from 'react'
 import Image from "next/image"
 import { Minus, Plus, X } from 'lucide-react'
 import Button from '../uiComponents/Button'
+import { CartItemType } from '@/lib/type'
+import { BASE_URL } from '@/lib/api'
 
-const CartItem = () => {
+const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
   return (
     <div className="flex items-center justify-between gap-6 border-b border-gray-200 py-4 mb-6 w-full flex-wrap bg-white px-4 rounded-lg shadow-sm">
     
         {/* Imagen del producto */}
         <div className="relative overflow-hidden w-[70px] h-[70px] rounded-lg border border-gray-200">
           <Image
-            src="/gaming_pad.jpg"
+            src={`${BASE_URL}/${cartItem.product.image}`}
             alt="cartitem-img"
             className="object-cover"
             fill
@@ -19,8 +21,8 @@ const CartItem = () => {
     
         {/* Detalles del producto - Nombre y precio  */}
         <div className="flex-1 min-w-[120px]">
-          <p className="font-semibold text-gray-800">Apple Smart Watch</p>
-          <p className="text-gray-600 text-sm mt-1">$200.00</p>
+          <p className="font-semibold text-gray-800">{cartItem.product.name}</p>
+          <p className="text-gray-600 text-sm mt-1">${cartItem.product.price}</p>
         </div>
     
         {/* Selector de Cantidad */}
@@ -34,7 +36,7 @@ const CartItem = () => {
     
           {/* Indicador de cantidad*/}
           <div className="w-[50px] h-[40px] flex items-center justify-center font-medium bg-white border border-gray-300 rounded-md shadow-sm">
-            3
+            {cartItem.quantity}
           </div>
     
           {/* Boton de crementar*/}

@@ -44,7 +44,7 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
     }
   };
 
-  const { cartItemCount } =  useCart()
+  const { cartItemCount, cartCode } =  useCart()
 
   return (
     <div className={cn("flex items-center justify-center gap-6", mobile ? "flex-col" : "flex-row")}>
@@ -73,7 +73,8 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
         <Link href="/signin" className="nav-btn">Ingresar</Link>
       }
 
-
+      {/* Botón del carrito de compras */}
+      <Link href={`/cart/${cartCode}`}>
       <div className="relative flex items-center h-[60px] w-[60px] justify-center cursor-pointer">
         <FaCartShopping className="text-4xl" />
 
@@ -81,6 +82,8 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
           {cartItemCount}
         </span>}
       </div>
+      </Link>
+
     </div>
   );
 };

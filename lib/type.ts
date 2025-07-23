@@ -57,3 +57,17 @@ export interface ProductDetail{
     excellent_review: number;
 
 }
+
+export interface CartItemType {
+    id: number;
+    product: Product;
+    quantity: number;
+    sub_total: number; 
+}
+
+export interface CartType {
+    id: number;
+    cart_code: string;
+    cartitems: CartItemType[];
+    cart_total: number;
+}
