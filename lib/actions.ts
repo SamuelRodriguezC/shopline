@@ -131,3 +131,23 @@ export async function addToWishlistAction(formData: FormData) {
         throw new Error("Un Error Desconocido ha Ocurrido")
     }
 }
+
+export async function updateCartItemAction(formData: FormData) {
+    const item_id = Number(formData.get("cartitem_id"))
+    const quantity = Number(formData.get("quantity"))
+    const cart_code = formData.get("cart_code")
+
+    const cartItem = {item_id, quantity}
+
+    try{
+        const response = await api.put("update_cartitem_quantity/", cartItem)
+        revalidatePath(`/cart/${cart_code}`)      
+        return response.data
+    }
+    catch(err: unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
+    }
+}

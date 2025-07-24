@@ -5,12 +5,19 @@ import { Minus, Plus, X } from 'lucide-react'
 import Button from '../uiComponents/Button'
 import { CartItemType } from '@/lib/type'
 import { BASE_URL } from '@/lib/api'
+import { useCart } from '@/context/CartContext'
+import { updateCartItemAction } from '@/lib/actions'
+import { toast } from 'react-toastify'
 
 const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
+
+  const { cartCode } = useCart()
 
   const sub_total_Format = (cartItem.sub_total).toFixed(3)
 
   const [quantity, setQuantity] = useState(cartItem.quantity)
+
+  const [cartItemUpdateLoader, setCartItemUpdateLoader] = useState(false)
 
   function increaseQuantity(){
     setQuantity(curr => curr + 1)
@@ -18,6 +25,31 @@ const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
   
   function decreaseQuantity(){
     setQuantity(curr => curr > 1 ? curr - 1 : 0)
+  }
+
+  async function handleUpdateCartItem(){
+    setCartItemUpdateLoader(true)
+    const formData = new FormData()
+    formData.set("quantity", String(quantity))
+    formData.set("cartitem_id", String(cartItem.id))
+    formData.set("cart_code", cartCode ? cartCode : '')
+
+    try{
+      await updateCartItemAction(formData)
+      toast.success(`Item - ${cartItem.product.name} actualizado`)
+    }
+    catch(err: unknown){
+      if(err instanceof Error){
+        toast.error("Ha Ocurrido un Error")
+        throw new Error(err.message)
+      }
+      toast.error("Error Desconocido")
+      throw new Error("Error Desconocido")
+    }
+    finally{
+      setCartItemUpdateLoader(false)
+    }
+
   }
 
   return (
@@ -72,8 +104,8 @@ const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
         </button>
     
         {/* boton para actualizar el carrito */}
-        <Button className='update-item-btn'>
-          Actualizar Carrito
+        <Button className='update-item-btn' disabled={cartItemUpdateLoader} handleClick={handleUpdateCartItem}>
+          { cartItemUpdateLoader ? "Actualizando..." :  "Actualizar Carrito"}
         </Button>
      
       </div>
