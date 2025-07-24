@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 
 const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
 
-  const { cartCode } = useCart()
+  const { cartCode, setCartItemsCount } = useCart()
 
   const sub_total_Format = (cartItem.sub_total).toFixed(3)
 
@@ -19,11 +19,15 @@ const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
 
   const [cartItemUpdateLoader, setCartItemUpdateLoader] = useState(false)
 
+  const [counter, setCounter] = useState(0)
+
   function increaseQuantity(){
+    setCounter(curr => curr + 1)
     setQuantity(curr => curr + 1)
   }
   
   function decreaseQuantity(){
+    setCounter(curr => curr - 1)
     setQuantity(curr => curr > 1 ? curr - 1 : 0)
   }
 
@@ -36,6 +40,7 @@ const CartItem = ({cartItem}: {cartItem: CartItemType}) => {
 
     try{
       await updateCartItemAction(formData)
+      setCartItemsCount(curr => curr + counter)
       toast.success(`Item - ${cartItem.product.name} actualizado`)
     }
     catch(err: unknown){
