@@ -151,3 +151,20 @@ export async function updateCartItemAction(formData: FormData) {
         throw new Error("Un Error Desconocido ha Ocurrido")
     }
 }
+
+export async function deleteCartitemAction(formData: FormData){
+    const item_id = Number(formData.get("cartitem_id"))
+    const cart_code = formData.get("cart_code")
+
+    try{
+        const response = await api.delete(`delete_cartitem/${item_id}/`)
+        revalidatePath(`/cart/${cart_code}`)
+        return response.data
+    }
+   catch(err: unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
+    }
+}
