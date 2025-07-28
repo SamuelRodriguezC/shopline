@@ -62,8 +62,8 @@ const NavBar = ({ loggedInUser }: User) => {
 
              {/* Si showSearchForm es true, se muestra el buscador en mobile */}
             {showSearchForm && (
-                <div className="w-[300px] mx-auto mt-4 max-lg:block hidden">
-                    <SearchForm />
+                <div className="w-[300px] mx-auto mt-4 max-lg:block hidden mb-5">
+                    <SearchForm/>
                 </div>
             )}
         </>
