@@ -5,7 +5,7 @@ import { Product } from "@/lib/type";
 
 interface Props{
   title: string;
-  similar_products: Product[];
+  similar_products?: Product[];
   detailPage?: boolean
 }
 
