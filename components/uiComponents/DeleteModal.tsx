@@ -19,7 +19,7 @@ const DeleteModal = ({handleDeleteReview, handleDeleteCartitem, deleteCartitem}:
 
     {deleteCartitem ? 
           <button 
-          className="p-2 rounded-md bg-red-50 hover:bg-red-100 transition text-red-500 border border-red-300"
+          className="p-2 rounded-md bg-red-50 hover:bg-red-100 transition text-red-500 border border-red-300 cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>  

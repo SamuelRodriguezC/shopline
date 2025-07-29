@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import CartItem from "@/components/cart/CartItem";
 import CartSummary from "@/components/cart/CartSummary";
 import { getCart } from "@/lib/api";
@@ -21,6 +22,10 @@ const CartItemPage = async ({params}: {params: Promise<{cartcode: string}>}) => 
   // Obtener el total del carrito
   const total_cart = cart.cart_total;
 
+  const session = await auth()
+
+  const loggedInUserEmail = session?.user?.email
+
   return (
     <div className="main-max-width padding-x mx-auto py-9">
       <h1 className="font-semibold text-2xl text-gray-800 mb-6">Carrito</h1>
@@ -34,7 +39,7 @@ const CartItemPage = async ({params}: {params: Promise<{cartcode: string}>}) => 
         </div>
         {/* Cartitem */}
 
-        <CartSummary total={total_cart} />
+        <CartSummary total={total_cart} loggedInUserEmail={loggedInUserEmail} />
       </div>
     </div>
   );
