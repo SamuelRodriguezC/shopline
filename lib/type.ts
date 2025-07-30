@@ -85,3 +85,8 @@ export interface OrderType {
     status: string; 
     created_at: string; 
 }
+
+export interface WishlistType{
+    id: number;
+    product: Product;
+}
