@@ -14,7 +14,7 @@ const CartItem = ({ cartItem }: { cartItem: CartItemType }) => {
 
   const { cartCode, setCartItemsCount } = useCart()
 
-  const sub_total_Format = (cartItem.sub_total).toFixed(3)
+  const sub_total_Format = (cartItem.sub_total).toFixed(2)
 
   const [quantity, setQuantity] = useState(cartItem.quantity)
 
