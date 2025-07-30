@@ -2,13 +2,13 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 
 // URL base del backend para centralizar y facilitar las solicitudes HTTP desde el frontend.
-// export const BASE_URL = "http://127.0.0.1:8000"
-export const BASE_URL = "https://ytecommerceapi2025-production.up.railway.app"
+export const BASE_URL = "http://127.0.0.1:8000"
+// export const BASE_URL = "https://ytecommerceapi2025-production.up.railway.app"
 
 // Crear instancia de axios para usarla como cliente HTTP
 export const api = axios.create({
-    // baseURL: "http://127.0.0.1:8000"
-    baseURL: BASE_URL,
+    baseURL: "http://127.0.0.1:8000"
+    // baseURL: BASE_URL,
 })
 
 
@@ -151,4 +151,19 @@ export async function productSearch(searchInput: string | null | undefined){
         
     }
 
+}
+
+
+export async function initiatePayment(paymentInfo: {email: string | null | undefined, cart_code: string | null}){
+    try{
+        const response = await api.post("create_checkout_session/", paymentInfo)
+        return response.data
+    }
+    catch(err: unknown){
+        if (err instanceof Error) {
+            throw new Error(err.message)
+        }
+        throw new Error("Un Error Desconocido ha Ocurrido")
+    }
+    
 }

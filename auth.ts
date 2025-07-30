@@ -14,6 +14,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   // Proveedor de autenticación
   providers: [Google],
+  secret: process.env.AUTH_SECRET, 
 
   // Funciones que permite personalizar como funciona la autenticación
   callbacks: {
