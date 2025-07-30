@@ -32,7 +32,7 @@ const CartSummary = ({total, loggedInUserEmail}: {total: number, loggedInUserEma
 
   
 
-    <Button className='checkout-btn' disabled={!Boolean(loggedInUserEmail) || total < 20}>
+    <Button className='checkout-btn' disabled={!Boolean(loggedInUserEmail) || total < 10}>
         {loggedInUserEmail ? "Continuar con el Proceso de Pago" : "Inicia Sesión para Pagar"}
     </Button>
 

@@ -2,11 +2,13 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 
 // URL base del backend para centralizar y facilitar las solicitudes HTTP desde el frontend.
-export const BASE_URL = "http://127.0.0.1:8000"
+// export const BASE_URL = "http://127.0.0.1:8000"
+export const BASE_URL = "https://ytecommerceapi2025-production.up.railway.app"
 
 // Crear instancia de axios para usarla como cliente HTTP
 export const api = axios.create({
-    baseURL: "http://127.0.0.1:8000"
+    // baseURL: "http://127.0.0.1:8000"
+    baseURL: BASE_URL,
 })
 
 
