@@ -71,3 +71,17 @@ export interface CartType {
     cartitems: CartItemType[];
     cart_total: number;
 }
+
+export interface OrderItemType{
+    id: number;
+    product: Product
+}
+
+export interface OrderType {
+    id: number;
+    stripe_checkout_id: string;
+    amount: number;
+    items: OrderItemType[];
+    status: string; 
+    created_at: string; 
+}

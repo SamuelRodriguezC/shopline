@@ -167,3 +167,19 @@ export async function initiatePayment(paymentInfo: {email: string | null | undef
     }
     
 }
+
+export async function getOrders(email: string | null | undefined){
+    if(email){
+        try{
+            const response = await api.get(`get_orders?email=${email}`)
+            return response.data
+        }
+        catch(err: unknown){
+            if(err instanceof Error){
+                throw new Error(err.message)
+            }
+            throw new Error("Un error Desconocido ha Ocurrido")
+        }
+    }
+}
+
