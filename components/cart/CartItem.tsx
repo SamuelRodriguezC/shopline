@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import Image from "next/image"
-import { CarIcon, Minus, Plus, X } from 'lucide-react'
+import { Minus, Plus } from 'lucide-react'
 import Button from '../uiComponents/Button'
 import { CartItemType } from '@/lib/type'
 import { BASE_URL } from '@/lib/api'

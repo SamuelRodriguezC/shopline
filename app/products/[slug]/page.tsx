@@ -7,11 +7,22 @@ import ReviewCardContainer from "@/components/productDetail/ReviewCardContainer"
 import ReviewForm from "@/components/productDetail/ReviewForm";
 import Modal from "@/components/uiComponents/Modal";
 import { getProductDetail } from "@/lib/api";
-import { ProductDetail } from "@/lib/type";
+import { Product, ProductDetail } from "@/lib/type";
 import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+
+export async function generateMetadata({params} : {params: Promise<{slug: string}>}) {
+  const { slug } = await params
+  const product: Product = await getProductDetail(slug)
+
+  return {
+    title: `Shopline | ${product.name}`
+  }
+}
+
+
 
 // Componente de página del producto (usado en la ruta dinámica). 
 // Recibe el parámetro `slug` desde la URL para cargar los datos del producto.

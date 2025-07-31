@@ -1,7 +1,15 @@
 import ProductCard from '@/components/home/Productcard';
 import { productSearch } from '@/lib/api';
 import { Product } from '@/lib/type';
+import { Metadata } from 'next';
 import React from 'react';
+
+
+export const metadata: Metadata = {
+  title: "Shopline - Buscar",
+  description: "...",
+};
+
 
 const SearchPage = async ({ searchParams }: { searchParams: { query: string | null | undefined } }) => {
 

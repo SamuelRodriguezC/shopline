@@ -79,7 +79,7 @@ const ReviewForm = ({product, loggedInUserEmail, review, updateReviewForm}: {pro
         }
 
 
-    }, [updateReviewForm ]);
+    }, [updateReviewForm]);
 
     async function handleUpdateReview(e: React.FormEvent){
         e.preventDefault()

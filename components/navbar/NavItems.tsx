@@ -54,7 +54,7 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
         <>
           <div className="w-[50px] h-[50px] rounded-full overflow-hidden shadow-md relative">
           {/* Profile picture container */}
-          <Image src={loggedInUser.image} alt="Foto de Perfil" className="object-cover" fill/>
+          <Image src={loggedInUser?.image ? loggedInUser.image : ""} alt="Foto de Perfil" className="object-cover" fill/>
         </div>
 
         <Link

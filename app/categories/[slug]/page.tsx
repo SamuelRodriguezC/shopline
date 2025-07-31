@@ -2,7 +2,20 @@ import CategoryBtn from '@/components/category/CategoryBtn'
 import ProductCard from '@/components/home/Productcard'
 import { getCategories, getCategory } from '@/lib/api'
 import { Category, Product } from '@/lib/type'
+
 import React from 'react'
+
+
+export async function generateMetadata({params} : {params: Promise<{slug: string}>}) {
+  const { slug } = await params
+  const category: Category = await getCategory(slug)
+
+  return {
+    title: `Shopline | ${category.name}`
+  }
+}
+
+
 
 // Optimizar la página
 // Genera los parámetros estáticos para la generación de páginas por categoría

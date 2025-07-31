@@ -3,7 +3,15 @@ import CartItem from "@/components/cart/CartItem";
 import CartSummary from "@/components/cart/CartSummary";
 import { getCart } from "@/lib/api";
 import { CartType } from "@/lib/type";
+import { Metadata } from "next";
 import React from "react";
+
+// Metadata global de la aplicación (Título y descripción)
+export const metadata: Metadata = {
+  title: "Shopline - Carrito",
+  description: "...",
+};
+
 
 const CartItemPage = async ({params}: {params: Promise<{cartcode: string}>}) => {
 
