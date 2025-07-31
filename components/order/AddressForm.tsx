@@ -4,13 +4,14 @@ import React, { useState } from 'react'
 import { Input } from '../ui/input'
 import { addAddress } from '@/lib/api'
 import { toast } from 'react-toastify'
+import { AddressType } from '@/lib/type'
 
-const AddressForm = ({loggedInUserEmail}: {loggedInUserEmail: string | null | undefined}) => {
+const AddressForm = ({loggedInUserEmail, address}: {loggedInUserEmail: string | null | undefined, address: AddressType | undefined}) => {
 
-    const [ street, setStreet] = useState("")
-    const [ city, setCity ] = useState("")
-    const [ state, setState ] = useState("")
-    const [ phone, setPhone ] = useState("")
+    const [ street, setStreet] = useState(address?.street ? address.street : "") // Usa el valor de 'street' si existe; si no, deja el campo vacío
+    const [ city, setCity ] = useState(address?.city ? address.city : "") // Usa el valor de 'city' si existe; si no, deja el campo vacío
+    const [ state, setState ] = useState(address?.state ? address.state : "") // Usa el valor de 'state' si existe; si no, deja el campo vacío
+    const [ phone, setPhone ] = useState(address?.phone ? address.phone : "") // Usa el valor de 'phone' si existe; si no, deja el campo vacío
     const [ btnLoader, setBtnLoader ] = useState(false)
     
 
@@ -96,7 +97,7 @@ const AddressForm = ({loggedInUserEmail}: {loggedInUserEmail: string | null | un
                 className="w-full h-12 bg-black text-white font-medium rounded-md hover:bg-gray-900 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" 
                 disabled={disabledButton() || btnLoader}>
                     
-                    {btnLoader ? "Guardando Dirección..." : "Guardar"}
+                    {btnLoader ? "Guardando Dirección..." : address?.city ? "Acualizar Dirección" : "Guardar"}
                 
             </button>
 

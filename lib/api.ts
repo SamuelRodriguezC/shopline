@@ -215,3 +215,23 @@ export async function addAddress(addressData: {email: string | null | undefined,
     }
 
 }
+
+
+export async function getAddress(email: string | null | undefined){
+
+    
+    if(email){
+        try{
+            const response = await api.get(`get_address?email=${email}`)
+            return response.data
+        }
+        catch(err: unknown){
+            if(err instanceof Error){
+                throw new Error(err.message)
+            }
+            throw new Error("Un error Desconocido ha Ocurrido")
+        }
+    }
+
+    return undefined
+}

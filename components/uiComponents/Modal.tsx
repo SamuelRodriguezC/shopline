@@ -9,15 +9,17 @@ import {
 from "@/components/ui/dialog";
 import Button from "./Button";
 import { PenIcon } from "lucide-react";
+import { AddressType } from "@/lib/type";
 
 interface Props {
   children: React.ReactNode;
   userHaveReview?: boolean;
   updateReviewModal?: boolean;
   addressForm?: boolean;
+  address?: AddressType | undefined;
 }
 
-const Modal = ({ children, userHaveReview, updateReviewModal, addressForm}: Props) => {
+const Modal = ({ children, userHaveReview, updateReviewModal, addressForm, address}: Props) => {
 
   if(userHaveReview){
     return null
@@ -30,13 +32,13 @@ const Modal = ({ children, userHaveReview, updateReviewModal, addressForm}: Prop
         {updateReviewModal ?
             
            (<button className="bg-gray-200 p-2 rounded-md cursor-pointer transition-all hover:bg-gray-300">
-              <PenIcon className="size-5 text-gray-600 cursor-pointer " />
+              <PenIcon className="size-5 text-gray-600" />
             </button>)
 
         :
 
         addressForm ? 
-          <Button className="address-btn cursor-pointer">Agregar direción de envío</Button>
+          <Button className="address-btn cursor-pointer">{address?.city? "Editar Dirección" : "Agregar direción de envío"}</Button>
           :
 
 
