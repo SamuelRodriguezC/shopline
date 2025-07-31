@@ -4,16 +4,14 @@ import { Product } from '@/lib/type';
 import { Metadata } from 'next';
 import React from 'react';
 
-
 export const metadata: Metadata = {
   title: "Shopline - Buscar",
   description: "...",
 };
 
-
-const SearchPage = async ({ searchParams }: { searchParams: { query: string | null | undefined } }) => {
-
-  const query = searchParams.query;
+const SearchPage = async ({ searchParams }: { searchParams: Promise<{ query: string | null | undefined }> }) => {
+  const params = await searchParams;
+  const query = params.query;
   const searchedProducts = await productSearch(query);
 
   return (
