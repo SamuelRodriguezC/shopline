@@ -1,10 +1,10 @@
 
 // import MiniProductCard from '@/components/order/MiniProductCard'
 import ProductSectionSkeleton from '@/components/home/ProductSectionSkeleton'
+import AddressFormContainer from '@/components/order/AddressFormContainer'
 import OrderContainer from '@/components/order/OrderContainer'
 import WishlistSection from '@/components/order/WishlistSection'
 // import PurchasedOrder from '@/components/order/PurchasedOrder'
-import Button from '@/components/uiComponents/Button'
 import React, { Suspense } from 'react'
 
 
@@ -14,7 +14,7 @@ const ProfilePage = () => {
   return (
     <>
       <div className="main-max-width padding-x py-6 flex-center mx-auto">
-        <Button className="address-btn">Agregar direción de envío</Button>
+        <AddressFormContainer/>        
       </div>
 
       <Suspense fallback={<ProductSectionSkeleton/>}> 

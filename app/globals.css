@@ -173,4 +173,9 @@
   .cat-btn{
     @apply w-[250px] max-md:w-full h-[50px] rounded-lg shadow-md flex items-center gap-4 px-4 transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-100
   }
+
+  .address-btn {
+     @apply w-[250px] max-md:w-full h-[50px] rounded-lg shadow-md flex items-center gap-4 px-4 transition-all duration-300 hover:shadow-lg hover:scale-105 border active:scale-100 bg-black text-white text-center hover:bg-gray-200 hover:text-black hover:border-gray-950
+  }
 }
+

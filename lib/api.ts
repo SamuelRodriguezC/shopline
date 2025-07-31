@@ -199,3 +199,19 @@ export async function getWishLists(email: string | null | undefined){
         }
     }
 }
+
+
+export async function addAddress(addressData: {email: string | null | undefined, phone: string, city: string, state: string, street: string}) {
+
+    try{
+        const response = await api.post("add_address/", addressData)
+        return response.data
+    }
+    catch(err: unknown){
+        if(err instanceof Error){
+            throw new Error(err.message)
+        }
+        throw new Error("Un error Desconocido ha Ocurrido")
+    }
+
+}

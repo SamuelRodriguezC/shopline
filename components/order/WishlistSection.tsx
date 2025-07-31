@@ -10,7 +10,7 @@ const WishlistSection = async () => {
     const session = await auth()
     const loggedInUserEmail = session?.user?.email
     const wishlists = await getWishLists(loggedInUserEmail)
-    console.log(wishlists)
+    // console.log(wishlists)
 
     if(!wishlists) {
         return (

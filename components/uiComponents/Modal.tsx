@@ -13,10 +13,11 @@ import { PenIcon } from "lucide-react";
 interface Props {
   children: React.ReactNode;
   userHaveReview?: boolean;
-  updateReviewModal?: boolean
+  updateReviewModal?: boolean;
+  addressForm?: boolean;
 }
 
-const Modal = ({ children, userHaveReview, updateReviewModal}: Props) => {
+const Modal = ({ children, userHaveReview, updateReviewModal, addressForm}: Props) => {
 
   if(userHaveReview){
     return null
@@ -29,13 +30,19 @@ const Modal = ({ children, userHaveReview, updateReviewModal}: Props) => {
         {updateReviewModal ?
             
            (<button className="bg-gray-200 p-2 rounded-md cursor-pointer transition-all hover:bg-gray-300">
-              <PenIcon className="size-5 text-gray-600" />
+              <PenIcon className="size-5 text-gray-600 cursor-pointer " />
             </button>)
 
         :
-            <Button className="default-btn max-sm:text-[12px] max-sm:px-4 my-6">
+
+        addressForm ? 
+          <Button className="address-btn cursor-pointer">Agregar direción de envío</Button>
+          :
+
+
+        (<Button className="default-btn max-sm:text-[12px] max-sm:px-4 my-6">
               Añadir Reseña
-            </Button>
+        </Button>)
         }
       </DialogTrigger>
       <DialogContent>
