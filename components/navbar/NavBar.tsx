@@ -31,7 +31,7 @@ const NavBar = ({ loggedInUser }: User) => {
             <div className="flex justify-between items-center main-max-width mx-auto padding-x py-3">
                 {/* Link para volver al home */}
                 <Link href="/">
-                    <h1 className="text-2xl font-extrabold text-gray-900">Shopline</h1>
+                    <h1 className="text-3xl font-extrabold text-gray-900">Shop<span className="text-blue-800">L</span>ine</h1>
                 </Link>
 
                 {/* Visible solo en pantallas grandes (oculto en <= LG) */}
