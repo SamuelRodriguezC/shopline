@@ -16,11 +16,10 @@ import WishlistMinTooltip from '../uiComponents/WishlistMinTooltip'
 
 const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedInUserEmail: string | null | undefined }) => {
 
-
-
   // Manejar estado de producto en lista de deseos
   const [ addedToWishList, setAddedToWishList ] = useState(false)
 
+  // Manejar estado del botón de lista de deseos
   const [addWishListLoader, setWishListLoader] = useState(false)
 
 

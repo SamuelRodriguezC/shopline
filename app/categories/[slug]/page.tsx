@@ -1,3 +1,4 @@
+import { auth } from '@/auth'
 import CategoryBtn from '@/components/category/CategoryBtn'
 import ProductCard from '@/components/home/Productcard'
 import { getCategories, getCategory } from '@/lib/api'
@@ -10,11 +11,11 @@ export async function generateMetadata({params} : {params: Promise<{slug: string
   const { slug } = await params
   const category: Category = await getCategory(slug)
 
+  
   return {
     title: `Shopline | ${category.name}`
   }
 }
-
 
 
 // Optimizar la página
@@ -25,7 +26,11 @@ export async function generateStaticParams(){
 }
 
 const CategoryPage = async ({params}: {params: Promise<{slug: string}>}) => {
-
+  
+  // Obtener el email del usuario en sesión
+  const session = await auth()
+  const loggedInUserEmail = session?.user?.email
+  
   // Obtener el slug desde los parámetros de la URL
   const { slug } = await params
 
@@ -53,7 +58,7 @@ const CategoryPage = async ({params}: {params: Promise<{slug: string}>}) => {
         {/* Listado de productos de la categoría actual */}
         {/* "Por cada producto, muestra una card, usando su id como clave y pasando el producto como propiedad." */}
         <div className='flex-center flex-wrap my-6 gap-4'>
-            {products.map((product: Product) => <ProductCard key={product.id} product={product}/>)}
+            {products.map((product: Product) => <ProductCard key={product.id} product={product} loggedInUserEmail={loggedInUserEmail}/>)}
         </div>
 
 
