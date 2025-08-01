@@ -24,7 +24,7 @@ const HomePage = () => {
 
     {/* Sección de productos con carga ralentizada */}
       <Suspense fallback={<ProductSectionSkeleton/>}>
-      <ProductSection title="Prodcutos Destacados"/>
+      <ProductSection title="Productos Destacados"/>
       </Suspense>
 
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 import ProductCard from "./Productcard";
-import { getProducts } from "@/lib/api";
+import { getFeaturedProducts } from "@/lib/api";
 import { Product } from "@/lib/type";
 import { auth } from "@/auth";
 
@@ -14,7 +14,7 @@ const ProductSection = async ({title, similar_products, detailPage}: Props) => {
 
   // Si estamos en una página de detalle (detailPage === true), usamos los productos similares pasados por props.
   // De lo contrario, obtenemos la lista completa de productos llamando a la función asincrónica getProducts().
-  const products = detailPage ? similar_products : await getProducts()
+  const products = detailPage ? similar_products : await getFeaturedProducts(8)
   // console.log(products)
 
   
