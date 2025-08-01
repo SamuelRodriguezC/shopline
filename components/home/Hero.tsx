@@ -3,7 +3,7 @@ import React from 'react'
 
 const Hero = () => {
   return (
-    <section className="relative bg-gray-200 py-15 flex items-center text-left w-full">
+    <section className="relative bg-gray-200 py-15 flex items-center text-left w-full overflow-hidden">
 
 
       
@@ -22,7 +22,7 @@ const Hero = () => {
           </p>
           <a
             href="#product_section"
-            className="inline-block bg-black text-white text-lg font-semibold px-8 py-3 rounded-xl shadow-lg hover:bg-gray-100 transition-all duration-300"
+            className="inline-block bg-blue-800 text-white text-lg font-semibold px-8 py-3 rounded-xl shadow-lg   hover:bg-black transition duration-400"
           >
             Comprar Ahora
           </a>

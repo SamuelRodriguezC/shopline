@@ -7,6 +7,7 @@ import SearchForm from "./SearchForm"; // Componente del formulario de bisqueda
 import NavItems from "./NavItems"; // Menú de navegación (Para escritorio)
 import MobileNavbar from "./MobileNavbar"; // Menú de navegación para celulares 
 import SearchButton from "./SearchButton"; //Botón de busqueda para celulares
+import Logo from "../uiComponents/Logo";
 
 interface User{
     loggedInUser: {
@@ -30,9 +31,10 @@ const NavBar = ({ loggedInUser }: User) => {
             {/* Contenedor principal de la barra de navegación  */}
             <div className="flex justify-between items-center main-max-width mx-auto padding-x py-3">
                 {/* Link para volver al home */}
-                <Link href="/">
-                    <h1 className="text-3xl font-extrabold text-gray-900">Shop<span className="text-blue-800">L</span>ine</h1>
+                <Link href="/" className="text-3xl font-extrabold text-gray-900">
+                    <Logo></Logo>
                 </Link>
+
 
                 {/* Visible solo en pantallas grandes (oculto en <= LG) */}
                 <div className="max-lg:hidden">

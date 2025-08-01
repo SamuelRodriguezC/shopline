@@ -128,14 +128,14 @@
 /* Clases personalizadas utilizables desde cualquier parte de la aplicación mediante layout.tsx*/
 @layer utilities {
   .search-form {
-    @apply w-[300px] max-sm:w-[250px] max-sm:h-[40px] max-sm:text-[14px] 
-           h-[50px] bg-white border-3 border-black rounded-[80px] 
+    @apply w-[400px] max-sm:w-[350px] max-sm:h-[50px] max-sm:text-[14px] 
+           h-[50px] bg-white border border-black rounded-[80px] 
            px-5 max-sm:px-3 flex flex-row items-center gap-5;
   }
 
-  .nav-btn {
+  .btn-1 {
     @apply px-4 py-2 bg-gray-900 text-white border border-gray-900 
-           rounded-md hover:bg-gray-700 transition cursor-pointer;
+           rounded-md hover:bg-gray-100 hover:text-black transition duration-400 cursor-pointer;
   }
 
   .flex-center {

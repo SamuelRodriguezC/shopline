@@ -65,12 +65,12 @@ const NavItems = ({ mobile, loggedInUser }: Props) => {
         </Link>
 
           
-            <button className="nav-btn" onClick={handleLogout}>Cerrar</button>
+            <button className="btn-1" onClick={handleLogout}>Cerrar</button>
         </>
 
         // De lo contrario
         :
-        <Link href="/signin" className="nav-btn">Ingresar</Link>
+        <Link href="/signin" className="btn-1">Ingresar</Link>
       }
 
       {/* Botón del carrito de compras */}
