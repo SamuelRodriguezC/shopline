@@ -79,7 +79,7 @@ const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
           <div className="w-[250px] h-[250px] bg-gray-100 rounded-lg px-4 py-6 flex flex-col gap-3 items-center justify-center shadow-lg">
             <h1 className="text-5xl font-bold text-gray-800">{averageRating.toFixed(1)}</h1>
             {/* Mostrar en plural o singular si el contador de reviews es mayor a 2 */}
-            <small className="text-gray-600 text-sm">de {reviewsCounter} {reviewsCounter < 2 ? "Reseña": "Reseñas"}</small>
+            <small className="text-gray-600 text-sm">de {reviewsCounter} {reviewsCounter === 1 ? "Reseña" : "Reseñas"}</small>
 
             {/*Renderiza las estrellas de calificación, rellenándolas en negro si su valor es menor o igual al promedio. */}
             <div className="flex gap-2">

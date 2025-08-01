@@ -3,8 +3,8 @@
 
 import React, { useEffect, useState } from 'react'
 import Image from "next/image"
-import { Product } from '@/lib/type'
-import { api, BASE_URL } from '@/lib/api'
+import { Product, ProductDetail } from '@/lib/type'
+import { api, BASE_URL, getProductDetail } from '@/lib/api'
 import Link from 'next/link'
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { FaEye, FaSpinner } from 'react-icons/fa6'
@@ -12,9 +12,38 @@ import { addToWishlistAction } from '@/lib/actions'
 import { toast } from 'react-toastify'
 import Button from '../uiComponents/Button'
 import WishlistMinTooltip from '../uiComponents/WishlistMinTooltip'
+import { Star } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 
 const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedInUserEmail: string | null | undefined }) => {
+  
+    // Estado para los detalles del producto
+  const [productDetail, setProductDetail] = useState<ProductDetail | null>(null);
+  useEffect(() => {
+    async function fetchProductDetail() {
+      try {
+        // Obtener los destalles del producto
+        const detail: ProductDetail = await getProductDetail(product.slug);
+        setProductDetail(detail);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          toast.error("Ups Parece que ha ocurrido un error");
+        }
+      }
+    }
+    fetchProductDetail();
+  }, [product.slug]);
+
+  // Promedio de calificación y total de reseñas, o 0 si no existen.
+  const averageRating = productDetail?.rating?.average_rating ?? 0
+  const reviewsCounter = productDetail?.rating?.total_reviews ?? 0
+
+  // Convierte el promedio de calificación a un número entero redondeando hacia abajo (para el sistema de estrellas). 
+  const starRating = Math.floor(averageRating) 
+
+  // Lista de Estrellas
+  const stars = [1, 2, 3, 4, 5]
 
   // Manejar estado de producto en lista de deseos
   const [ addedToWishList, setAddedToWishList ] = useState(false)
@@ -98,9 +127,14 @@ const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedIn
         </div>
 
         {/* Reseñas */}
-        <div className="flex items-center text-sm gap-1 text-yellow-500">
-          <span>★★★★☆</span>
-          <span className="text-gray-500 ml-1">20k reviews</span>
+        <div className="flex items-center text-sm gap-1 my-3 text-yellow-500">
+              {stars.map((star) => 
+                <Star 
+                    key={star}
+                    className={cn("w-5 h-5", star <= starRating ? "fill-yellow-500" : "")} 
+                />)
+              }
+          <span className="text-gray-500 ml-1">{reviewsCounter} {reviewsCounter === 1 ? "Reseña" : "Reseñas"}</span>
         </div>
 
         {/* Botones */}
