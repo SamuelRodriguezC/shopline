@@ -2,6 +2,7 @@ import React from "react";
 import ProductCard from "./Productcard";
 import { getProducts } from "@/lib/api";
 import { Product } from "@/lib/type";
+import { auth } from "@/auth";
 
 interface Props{
   title: string;
@@ -16,6 +17,11 @@ const ProductSection = async ({title, similar_products, detailPage}: Props) => {
   const products = detailPage ? similar_products : await getProducts()
   // console.log(products)
 
+  
+  // Obtener el email del usuario en sesión 
+  const session = await auth()
+  const loggedInUserEmail = session?.user?.email
+
   return (
     <section className="main-max-width x-10 max-sm:px-10 mx-auto my-12">
       <h2 className="my-9 text-center text-xl font-bold text-gray-800">
@@ -24,7 +30,7 @@ const ProductSection = async ({title, similar_products, detailPage}: Props) => {
 
       {/* Contenido */}
       <div className="flex-center flex-wrap gap-4">
-        {products.map((product: Product) => <ProductCard key={product.id} product={product}/>)}
+        {products.map((product: Product) => <ProductCard key={product.id} product={product} loggedInUserEmail={loggedInUserEmail}/>)}
 
       </div>
     </section>

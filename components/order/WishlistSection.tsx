@@ -12,7 +12,7 @@ const WishlistSection = async () => {
     const wishlists = await getWishLists(loggedInUserEmail)
     // console.log(wishlists)
 
-    if(!wishlists) {
+    if(!wishlists || wishlists == 0) {
         return (
             <section className="main-max-width padding-x mx-auto my-16 text-center bg-white p-10 rounded-xl shadow">
                 <div className="flex flex-col items-center space-y-4">

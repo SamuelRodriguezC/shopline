@@ -138,6 +138,11 @@
            rounded-md hover:bg-gray-100 hover:text-black transition duration-400 cursor-pointer;
   }
 
+  .btn-2 {
+    @apply px-4 py-2  text-white 
+           rounded-md hover:bg-black  transition duration-400 cursor-pointer;
+  }
+
   .flex-center {
     @apply flex items-center justify-center;
   }

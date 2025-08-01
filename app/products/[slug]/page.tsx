@@ -23,7 +23,6 @@ export async function generateMetadata({params} : {params: Promise<{slug: string
 }
 
 
-
 // Componente de página del producto (usado en la ruta dinámica). 
 // Recibe el parámetro `slug` desde la URL para cargar los datos del producto.
 const ProductPage = async ({params}: {params: Promise<{slug: string}>}) => {
