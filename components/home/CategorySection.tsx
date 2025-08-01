@@ -10,7 +10,7 @@ const CategorySection = async () => {
   const categories = await getCategories()
   // console.log(categories)
   return (
-    <section className="main-max-width padding-x mx-auto">
+    <section className="main-max-width padding-x mx-auto my-5">
       <h2 className="my-9 text-center text-xl font-bold text-gray-800">
         Buscar Categoría
       </h2>
