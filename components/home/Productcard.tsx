@@ -11,6 +11,7 @@ import { FaEye, FaSpinner } from 'react-icons/fa6'
 import { addToWishlistAction } from '@/lib/actions'
 import { toast } from 'react-toastify'
 import Button from '../uiComponents/Button'
+import WishlistMinTooltip from '../uiComponents/WishlistMinTooltip'
 
 
 const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedInUserEmail: string | null | undefined }) => {
@@ -112,12 +113,16 @@ const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedIn
             </button>
 
             {/* Lista de Deseos */}
-            <Button 
+            {loggedInUserEmail ? 
+              <Button 
                 disabled={addWishListLoader} 
-                className={`btn-2 disabled:opacity-50 disabled:cursor-not-allowed ${addedToWishList ? "bg-black" : " bg-gray-400"}`} 
+                className={`btn-2 disabled:cursor-not-allowed ${addedToWishList ? "bg-black" : " bg-gray-400"}`} 
                 handleClick={handleAddToWishlist}>
               {addWishListLoader ? <FaSpinner className="animate-spin"/> : <FaHeart />}
             </Button>
+            :
+            <WishlistMinTooltip loggedInUserEmail={loggedInUserEmail}/>
+          }
 
             {/* Ver Producto */}
             <Link href={`/products/${product.slug}`} className="btn-2 bg-gray-400">
