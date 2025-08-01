@@ -1,13 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCartShopping } from "react-icons/fa6";
 
 const Logo = () => {
   const [hovered, setHovered] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const text = "ShopLine";
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (hovered) {
+      setShowCart(true);
+
+      // Oculta el carrito después de que llegue al final
+      const totalTime = text.length * 0.12 * 1000; // milisegundos
+      timeout = setTimeout(() => {
+        setShowCart(false);
+      }, totalTime + 100); // +100ms para dejarlo visible brevemente
+    } else {
+      setShowCart(false);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [hovered]);
 
   return (
     <div
@@ -47,10 +65,11 @@ const Logo = () => {
         ))}
       </div>
 
-      {/* Carrito solo visible mientras hovered */}
+      {/* Carrito animado con duración y desaparición automática */}
       <AnimatePresence>
-        {hovered && (
+        {showCart && (
           <motion.div
+            key="cart"
             className="absolute top-[6px] left-0 text-blue-800 text-2xl"
             initial={{ x: -40, opacity: 0 }}
             animate={{
@@ -61,7 +80,11 @@ const Logo = () => {
                 ease: "easeInOut",
               },
             }}
-            exit={{ opacity: 0 }}
+            exit={{
+              opacity: 0,
+              x: text.length * 19,
+              transition: { duration: 0.3 },
+            }}
           >
             <FaCartShopping />
           </motion.div>
