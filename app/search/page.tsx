@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import ProductCard from '@/components/home/Productcard';
 import { productSearch } from '@/lib/api';
 import { Product } from '@/lib/type';
@@ -13,6 +14,8 @@ const SearchPage = async ({ searchParams }: { searchParams: Promise<{ query: str
   const params = await searchParams;
   const query = params.query;
   const searchedProducts = await productSearch(query);
+  const session = await auth()
+  const loggedInUserEmail = session?.user?.email
 
   return (
     <div className="main-max-width mx-auto padding-x py-9">
@@ -23,7 +26,7 @@ const SearchPage = async ({ searchParams }: { searchParams: Promise<{ query: str
       <div className="flex-center flex-wrap my-9 gap-4">
         {searchedProducts?.length > 0 ? (
           searchedProducts.map((product: Product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} loggedInUserEmail={loggedInUserEmail}/>
           ))
         ) : (
           <p className="font-thin text-center text-lg">

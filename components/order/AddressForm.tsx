@@ -30,7 +30,7 @@ const AddressForm = ({loggedInUserEmail, address}: {loggedInUserEmail: string | 
 
         try{
             await addAddress(addressObj)
-            toast.success("Dirección agregada Correctamente")
+            toast.success("Dirección Guardada")
 
             // Limpiar campos luego de enviar la solicitud post
             setStreet("")
