@@ -11,7 +11,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gray-200"></div>
 
       {/* Contenido con z-index para estar encima del overlay */}
-      <div className="relative z-10 container mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-12 text-gray-700">
+      <div className="relative z-10 container mx-auto px-6 flex flex-col lg:flex-row items-center justify-around gap-12 text-gray-700">
          {/* Texto */}
         <div className="lg:w-1/2 space-y-6 text-left">
           <h1 className="text-4xl font-extrabold leading-snug md:text-5xl">

@@ -7,19 +7,32 @@ import { Product, ProductDetail } from '@/lib/type'
 import { api, BASE_URL, getProductDetail } from '@/lib/api'
 import Link from 'next/link'
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
-import { FaEye, FaSpinner } from 'react-icons/fa6'
-import { addToWishlistAction } from '@/lib/actions'
+import { FaCheck, FaEye, FaSpinner } from 'react-icons/fa6'
+import { addToCartAction, addToWishlistAction } from '@/lib/actions'
 import { toast } from 'react-toastify'
 import Button from '../uiComponents/Button'
 import WishlistMinTooltip from '../uiComponents/WishlistMinTooltip'
 import { Star } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useCart } from '@/context/CartContext'
 
 
 const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedInUserEmail: string | null | undefined }) => {
+
+  // Loader de estado para saber si se está agregando el producto al carrito
+  const [addToCartLoader, setAddToCartLoader] = useState(false)
+
+  // Loader de estado para saber si se está agregando el producto al carrito
+  const [addedToCart, setAddedToCart] = useState(false)
+
+  // Traemos variables globales del contexto del carrito
+  const { cartCode, setCartItemsCount } = useCart()
   
-    // Estado para los detalles del producto
+  
+  // Estado donde se guardan los detalles completos del producto (reviews, rating, etc.)
   const [productDetail, setProductDetail] = useState<ProductDetail | null>(null);
+
+  // Al montar el componente o cambiar el slug, cargamos los detalles del producto
   useEffect(() => {
     async function fetchProductDetail() {
       try {
@@ -45,7 +58,7 @@ const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedIn
   // Lista de Estrellas
   const stars = [1, 2, 3, 4, 5]
 
-  // Manejar estado de producto en lista de deseos
+  // Estado para saber si el producto ya está en la lista de deseos
   const [ addedToWishList, setAddedToWishList ] = useState(false)
 
   // Manejar estado del botón de lista de deseos
@@ -76,7 +89,53 @@ const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedIn
 
   }
 
-  
+  // Función para agregar productos al carrito
+ useEffect(() => {
+
+    async function handleAddToCart() {
+
+      try {
+        const response = await api.get(`product_in_cart?cart_code=${cartCode}&product_id=${product.id}`)
+        setAddedToCart(response.data.product_in_cart)
+        return response.data
+      }
+      catch (err: unknown) {
+        if (err instanceof Error) {
+          throw new Error(err.message)
+        }
+        throw new Error("Un Eror Desconocido ha Ocurrido")
+      }
+
+    }
+    handleAddToCart()
+
+  }, [cartCode, product.id])
+
+
+  async function handleAddToCart() {
+    setAddToCartLoader(true)
+    const formData = new FormData();
+    formData.set("cart_code", cartCode ? cartCode : "")
+    formData.set("product_id", String(product.id))
+
+    try {
+      const response = await addToCartAction(formData)
+      setAddedToCart(true)
+      setCartItemsCount(curr => curr + 1)
+      toast.success("Producto Añadido al Carrito")
+      return response
+    }
+    catch (err: unknown) {
+      if (err instanceof Error) {
+        throw new Error(err.message)
+      }
+      throw new Error("Un Eror Desconocido ha Ocurrido")
+    }
+    finally {
+      setAddToCartLoader(false)
+    }
+
+  }
     useEffect(() => {
   
       async function handleProductInWishlist(){
@@ -141,9 +200,9 @@ const ProductCard = ({ product, loggedInUserEmail}: { product: Product, loggedIn
           <div className="flex items-center gap-2 text-gray-600">
 
             {/* Carrito de Compras */}
-            <button className="btn-2 bg-gray-400">
-              <FaShoppingCart />
-            </button>
+            <Button className="btn-2 bg-gray-400 disabled:bg-black disabled:cursor-not-allowed" handleClick={handleAddToCart} disabled={addToCartLoader || addedToCart}>
+              {addToCartLoader ? <FaSpinner className="animate-spin"/> : addedToCart ? <FaCheck/> : <FaShoppingCart />}
+            </Button>
 
             {/* Lista de Deseos */}
             {loggedInUserEmail ? 
