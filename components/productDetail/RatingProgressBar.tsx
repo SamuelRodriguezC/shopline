@@ -1,7 +1,7 @@
 import React from "react";
 import { Progress } from "@/components/ui/progress"
 
-
+// Definir tipos de props esperados en el componente
 interface Props{
     rating: string;
     numRating: number

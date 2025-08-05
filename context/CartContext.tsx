@@ -26,8 +26,11 @@ export function CartProvider({children} : {children: React.ReactNode}) {
 
     // Estado para contar la cantidad de ítems en el carrito
     const [cartItemCount, setCartItemsCount] = useState(0)
-
+    
+    // Se ejecuta cada que cambia el cartCode
     useEffect(() => {
+
+        // obtener contador de productos del carrito
         async function getCartItemsCount() {
             
             try{
@@ -58,6 +61,7 @@ export function CartProvider({children} : {children: React.ReactNode}) {
 
         // Si no existe, genera uno nuevo y lo guarda en localStorage
         if(!code){
+            // Usar función de utils.ts para generar un string ramdom
             code = generateRandomString()
             localStorage.setItem('cartCode', code)
         }

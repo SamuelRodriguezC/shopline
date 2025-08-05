@@ -13,18 +13,28 @@ import WishlistTooltip from '../uiComponents/WishlistTooltip'
 
 const ProductInfo = ({ product, loggedInUserEmail }: { product: ProductDetail, loggedInUserEmail: string | null | undefined }) => {
 
+  // Traemos variables globales del contexto del carrito
   const { cartCode, setCartItemsCount } = useCart()
+
+  // Manejar el estado de carga del carrito
   const [addToCartLoader, setAddToCartLoader] = useState(false)
+
+  // Manejar estado de productos en la lista de deseos
   const [addedToWishList, setAddedToWishList] = useState(false)
+
+  // Manejar estado de productos añadidos al carrito
   const [addedToCart, setAddedToCart] = useState(false)
+
+  // Manejar estado de carga de la lista de deseos
   const [addWishListLoader, setWishListLoader] = useState(false)
 
+  // Ejecuta el código cuando el componente se monta o cambian las dependencias
   useEffect(() => {
-
     async function handleAddToCart() {
-
       try {
+        // Llamar a la api para cosultar si un producto ya está en el carrito
         const response = await api.get(`product_in_cart?cart_code=${cartCode}&product_id=${product.id}`)
+        // Se guarda la respuesta 
         setAddedToCart(response.data.product_in_cart)
         return response.data
       }
@@ -34,23 +44,28 @@ const ProductInfo = ({ product, loggedInUserEmail }: { product: ProductDetail, l
         }
         throw new Error("Un Eror Desconocido ha Ocurrido")
       }
-
     }
     handleAddToCart()
+  }, [cartCode, product.id]) //Se ejecuta cada vez que cambia el código del carrito o el product id
 
-  }, [cartCode, product.id])
 
-
+  // Función para agregar un producto al carrito y actualizar el estado de carga del mismo
   async function handleAddToCart() {
+    // Se Activa el loader
     setAddToCartLoader(true)
+
+    // Crear formData para enviar datos a la api
     const formData = new FormData();
     formData.set("cart_code", cartCode ? cartCode : "")
     formData.set("product_id", String(product.id))
 
     try {
+      // Llamar función para agregar productos al carrito de la api
       const response = await addToCartAction(formData)
       setAddedToCart(true)
+      // Aumentar la cantidad de productos en el carrito
       setCartItemsCount(curr => curr + 1)
+      // mostrar notificación de exito
       toast.success("Producto Añadido al Carrito")
       return response
     }
@@ -61,19 +76,26 @@ const ProductInfo = ({ product, loggedInUserEmail }: { product: ProductDetail, l
       throw new Error("Un Eror Desconocido ha Ocurrido")
     }
     finally {
+      // Se finaliza el loader
       setAddToCartLoader(false)
     }
 
   }
 
+  // Función para agregar un producto a la lista de deseos y actualizar el loader
   async function handleAddToWishlist() {
+    // Comienza el loader
     setWishListLoader(true)
+
+    // Crear formData para enviar datos a la api
     const formData = new FormData()
     formData.set("product_id", String(product.id))
     formData.set("email", loggedInUserEmail ? loggedInUserEmail : "")
 
     try {
+      // Ejecuta función para añadir pasandole en formData
       const result = await addToWishlistAction(formData)
+      // Actualizar estado para reflejar si el producto está en la lista de deseos
       setAddedToWishList(result.action === "created")
       toast.success("Lista de Deseos Actualizada")
     }
@@ -83,17 +105,21 @@ const ProductInfo = ({ product, loggedInUserEmail }: { product: ProductDetail, l
       }
       throw new Error("Un Eror Desconocido ha Ocurrido")
     }
+    // Desactivar el loader 
     finally {
       setWishListLoader(false)
     }
   }
 
+  // Función que se ejecuta cuando cambie el email del usuario o el id del producto
   useEffect(() => {
-
     async function handleProductInWishlist(){
+      // Evitar hacer la petición sin no hay sesión iniciada 
       if(loggedInUserEmail){
         try{
+          // consultar si el producto está en la lista de deseos del usuario logeado
           const response = await api.get(`product_in_wishlist?email=${loggedInUserEmail}&product_id=${product.id}`)
+          // Actualizar el estado según la respuesta de la api
           setAddedToWishList(response.data.product_in_wishlist)
           return response.data
         }
@@ -105,10 +131,9 @@ const ProductInfo = ({ product, loggedInUserEmail }: { product: ProductDetail, l
         }
       }
     }
-
+    // Guaradar ña respuesta en el estado local
     handleProductInWishlist()
-
-  }, [loggedInUserEmail, product.id])
+  }, [loggedInUserEmail, product.id]) 
 
   return (
     <div className="bg-gray-50 padding-x py-10 flex items-start flex-wrap gap-12 main-max-width padding-x mx-auto">

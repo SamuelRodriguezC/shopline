@@ -18,14 +18,19 @@ const ReviewCard = ({review, loggedInUser, product}: {review: Review, loggedInUs
 
   // función para eliminar la reseña
   async function handleDeleteReview(){
+
+    // Crear formadata para enviar datos a la api 
     const formData = new FormData()
     formData.set("review_id", String(review.id))
     formData.set("slug", product.slug)
 
     try{
+        // Intentar realizar la acción de la api
         await deleteReviewAction(formData)
+        // Mostrar mensaje de exito
         toast.success("Reseña Eliminada Correctamente")
     }
+    // Si la solicitud falla mostrar mensaje de error
     catch(err: unknown){
       if(err instanceof Error){
         toast.error("Ups Ha Ocurrido un Error Intentalo Más Tarde")
@@ -46,18 +51,11 @@ const ReviewCard = ({review, loggedInUser, product}: {review: Review, loggedInUs
           <>
             {/* Botón para borrar */}
             <DeleteModal handleDeleteReview={handleDeleteReview}/>
-            {/* <button className="bg-gray-200 p-2 rounded-md cursor-pointer transition-all hover:bg-gray-300">
-              <TrashIcon className="size-5 text-gray-600" />
-            </button> */}
 
             {/* Botón para editar */}
             <Modal updateReviewModal>
               <ReviewForm updateReviewForm review={review} product={product} loggedInUserEmail={loggedInUserEmail}/>
             </Modal>
-
-            {/* <button className="bg-gray-200 p-2 rounded-md cursor-pointer transition-all hover:bg-gray-300">
-              <PenIcon className="size-5 text-gray-600" />
-            </button> */}
           </>
         </span>}
 

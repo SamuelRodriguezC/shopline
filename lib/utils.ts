@@ -5,7 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-
+// Calcula cuánto tiempo ha pasado desde una fecha dada 
+// y lo devuelve como una cadena en español (ej: hace 3 días).
 export function timeAgo(timestamp: string): string{
   const now = new Date();
   const past = new Date(timestamp);
@@ -29,6 +30,8 @@ export function timeAgo(timestamp: string): string{
   return 'Justo Ahora';
 }
 
+
+// Genera una cadena aleatoria de una longitud dada
 export function generateRandomString(length = 10){
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk¿lmnopqrstuvwxyz0123456789";
   let result = '';

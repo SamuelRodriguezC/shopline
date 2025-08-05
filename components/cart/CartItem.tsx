@@ -12,6 +12,7 @@ import DeleteModal from '../uiComponents/DeleteModal'
 
 const CartItem = ({ cartItem }: { cartItem: CartItemType }) => {
 
+  // Obtener variabls
   const { cartCode, setCartItemsCount } = useCart()
 
   const sub_total_Format = (cartItem.sub_total).toFixed(2)

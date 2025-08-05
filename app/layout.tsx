@@ -17,18 +17,6 @@ import { CartProvider } from "@/context/CartContext";
 
 
 
-// // Configuración de las fuentes con variables CSS o clases
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
 const ubuntu = Ubuntu({
   weight: ["400", "500", "700"],
   subsets: ["latin"]
@@ -53,6 +41,7 @@ export default function RootLayout({
       <body className={``}>
         <main className="w-full ">
 
+          {/* Carrito */}
           <CartProvider>
 
 

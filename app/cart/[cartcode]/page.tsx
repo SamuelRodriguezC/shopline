@@ -41,7 +41,8 @@ const CartItemPage = async ({params}: {params: Promise<{cartcode: string}>}) => 
       <div className="flex flex-wrap gap-6 lg:gap-8 justify-between w-full">
         {/* Cartitem */}
         <div className="w-[600px] max-lg:w-full border border-gray-200 shadow-sm rounded-lg bg-white overflow-hidden flex-1">
-          <div className="max-h-[400px] overflow-y-auto px-6 py-4">
+          <div className="max-h-[400px] overflow-y-auto px-6 py-4">0
+            {/* Mostrar uno por uno los productos de carrito */}
             {cartitems_count > 0 ? (cartItems.map((cartitem) => <CartItem key={cartitem.id} cartItem={cartitem}/>)) : <p className="text-center text-gray-500 py-10">Tu Carrito Está Vacío.</p>}
           </div>
         </div>
