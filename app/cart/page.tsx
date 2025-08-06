@@ -12,10 +12,7 @@ const CartPage = () => {
           No has añadido ningún item al carrito
         </h1>
 
-        <Link
-          href="/"
-          className="inline-block bg-black text-white text-lg font-medium px-6 py-3 rounded-lg shadow-md hover:bg-gray-800 transition-all"
-        >
+        <Link href="/" className="inline-block bg-black text-white text-lg font-medium px-6 py-3 rounded-lg shadow-md hover:bg-gray-800 transition-all">
           Volver al inicio
         </Link>
       </div>

@@ -18,10 +18,10 @@ export async function generateMetadata({params} : {params: Promise<{slug: string
 }
 
 
-// Optimizar la página
-// Genera los parámetros estáticos para la generación de páginas por categoría
+// Genera los parámetros estáticos para las rutas dinámicas de categorías
 export async function generateStaticParams(){
   const categories = await getCategories()
+  // Retornar solo los slugs necesarios para la generación estática
   return categories.map((category: Category) => ({slug: category.slug}))
 }
 

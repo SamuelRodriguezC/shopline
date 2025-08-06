@@ -30,8 +30,8 @@ const CartItemPage = async ({params}: {params: Promise<{cartcode: string}>}) => 
   // Obtener el total del carrito
   const total_cart = cart.cart_total;
 
+  // Obtener el email de la persona en sesión
   const session = await auth()
-
   const loggedInUserEmail = session?.user?.email
 
   return (

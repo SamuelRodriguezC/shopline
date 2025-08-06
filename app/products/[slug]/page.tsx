@@ -14,7 +14,11 @@ import Link from "next/link";
 import React from "react";
 
 export async function generateMetadata({params} : {params: Promise<{slug: string}>}) {
+
+  // Obtener el slug
   const { slug } = await params
+
+  // Buscar el detalle del producto api.ts
   const product: Product = await getProductDetail(slug)
 
   return {
